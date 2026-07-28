@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ProxiEat</string>
+
+    <!-- Navigation labels -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_feed">Feed</string>
+    <string name="nav_schedule">Schedule</string>
+    <string name="nav_camera">Camera</string>
+
+    <!-- Portion sizes -->
+    <string name="portion_small">Small</string>
+    <string name="portion_medium">Medium</string>
+    <string name="portion_large">Large</string>
+
+    <!-- Status labels -->
+    <string name="status_online">Online</string>
+    <string name="status_offline">Offline</string>
+    <string name="status_loading">Loading…</string>
+
+    <!-- Sensor labels -->
+    <string name="label_food_tank">Pellet Tank</string>
+    <string name="label_water_tank">Water Tank</string>
+    <string name="label_bowl_weight">Bowl Weight</string>
+
+    <!-- Actions -->
+    <string name="action_dispense">Dispense Now</string>
+    <string name="action_save">Save</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_delete">Delete</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_camera_feed">ESP32-CAM live feed</string>
+    <string name="cd_delete_schedule">Delete schedule entry</string>
+</resources>

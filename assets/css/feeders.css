@@ -1,0 +1,99 @@
+.feeder-tank {
+    min-width: 88px;
+}
+
+.feeder-tank .progress {
+    height: 7px;
+}
+
+.feeder-tank .progress-bar.food {
+    background: #e28a1b;
+}
+
+.feeder-tank .progress-bar.water {
+    background: #1769d1;
+}
+
+.status-available {
+    background: #dff4e7;
+    color: #14723b;
+}
+
+.status-assigned {
+    background: #e1efff;
+    color: #125cac;
+}
+
+.status-maintenance {
+    background: #fff0d9;
+    color: #a85b09;
+}
+
+.status-offline {
+    background: #e9ecef;
+    color: #596575;
+}
+
+.feeder-table {
+    overflow: hidden;
+}
+
+.feeder-table .table {
+    font-size: .82rem;
+}
+
+.feeder-table .table th {
+    background: #f8fafc;
+}
+
+.feeder-toolbar .form-control,
+.feeder-toolbar .form-select {
+    min-height: 38px;
+    font-size: .84rem;
+}
+
+.feeder-toolbar .input-group-text {
+    background: #fff;
+    border-right: 0;
+    color: #7b899a;
+}
+
+.feeder-toolbar .input-group .form-control {
+    border-left: 0;
+}
+
+.detail-stat .card-body {
+    padding: 1.25rem;
+}
+
+.detail-stat h3 {
+    color: #24364c;
+    font-size: 1.65rem;
+    font-weight: 700;
+    margin: .35rem 0;
+}
+
+.schedule-time {
+    min-width: 78px;
+}
+
+.activity-icon {
+    align-items: center;
+    background: #eaf3ff;
+    border-radius: 50%;
+    color: #1769d1;
+    display: inline-flex;
+    height: 32px;
+    justify-content: center;
+    width: 32px;
+}
+
+.camera-placeholder {
+    align-items: center;
+    background: #eaf3ff;
+    color: #54779e;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 230px;
+}

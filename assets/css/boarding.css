@@ -1,0 +1,81 @@
+.boarding-toolbar .form-control, .boarding-toolbar .form-select {
+    min-height: 38px;
+    font-size: .84rem;
+}
+.boarding-toolbar .input-group-text {
+    background: #fff;
+    border-right: 0;
+    color: #7b899a;
+}
+.boarding-toolbar .input-group .form-control {
+    border-left: 0;
+}
+.record-count {
+    color: #647387;
+    font-size: .84rem;
+}
+.boarding-table {
+    overflow: hidden;
+}
+.boarding-table .table {
+    font-size: .82rem;
+}
+.boarding-table .table th {
+    background: #f8fafc;
+}
+.boarding-id {
+    color: #1769d1;
+    font-weight: 700;
+}
+.pet-avatar {
+    align-items: center;
+    background: #eaf3ff;
+    border-radius: 50%;
+    color: #1769d1;
+    display: inline-flex;
+    height: 30px;
+    justify-content: center;
+    width: 30px;
+}
+.badge-reserved {
+    background: #dff4e7;
+    color: #14723b;
+}
+.badge-checked-in {
+    background: #e1efff;
+    color: #125cac;
+}
+.badge-checking-out {
+    background: #fff0d9;
+    color: #a85b09;
+}
+.badge-checked-out {
+    background: #e9ecef;
+    color: #596575;
+}
+.badge-cancelled {
+    background: #fde5e8;
+    color: #b3263a;
+}
+.pagination .page-link {
+    color: #1769d1;
+    font-size: .83rem;
+}
+.pagination .page-item.active .page-link {
+    background-color: #1769d1;
+    border-color: #1769d1;
+}
+.empty-state {
+    border-style: dashed;
+}
+.empty-icon {
+    align-items: center;
+    background: #eaf3ff;
+    border-radius: 50%;
+    color: #1769d1;
+    display: inline-flex;
+    font-size: 1.7rem;
+    height: 64px;
+    justify-content: center;
+    width: 64px;
+}

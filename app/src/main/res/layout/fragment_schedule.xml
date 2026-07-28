@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Header -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🗓️ Feeding Schedule"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="?attr/colorOnBackground"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Feeder 01 · B-01 · Max"
+        android:textSize="13sp"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        android:layout_marginBottom="20dp" />
+
+    <!-- ── ADD NEW SCHEDULE CARD ─────────────────────────────── -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="2dp"
+        app:strokeColor="@color/teal_mid"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ADD TIME SLOT"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1"
+                android:textColor="@color/teal"
+                android:layout_marginBottom="14dp" />
+
+            <!-- Time picker button -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FEEDING TIME"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.07"
+                android:textColor="@color/text_secondary"
+                android:layout_marginBottom="6dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_pick_time"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="🕐  8:00 AM"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                app:strokeColor="@color/teal_mid"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Portion spinner -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PORTION SIZE"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.07"
+                android:textColor="@color/text_secondary"
+                android:layout_marginBottom="6dp" />
+
+            <Spinner
+                android:id="@+id/spinner_portion"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_spinner"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Save button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="Save Schedule"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/teal"
+                app:cornerRadius="12dp"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Status message -->
+    <TextView
+        android:id="@+id/tv_schedule_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:padding="12dp"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:textColor="@color/teal"
+        android:background="@drawable/bg_result_card"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Loading -->
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_schedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:indicatorColor="@color/teal"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Section header -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CURRENT SCHEDULES"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.1"
+        android:textColor="@color/text_secondary"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Empty state -->
+    <TextView
+        android:id="@+id/tv_empty_schedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No schedules yet. Add a time slot above."
+        android:textSize="13sp"
+        android:textColor="@color/text_secondary"
+        android:gravity="center"
+        android:padding="24dp"
+        android:visibility="gone" />
+
+    <!-- Schedules list -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_schedules"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp" />
+
+</LinearLayout>
