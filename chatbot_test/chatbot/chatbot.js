@@ -1,17 +1,29 @@
 // ============================================
 // ProxiE Chatbot
-// IoT Web Application - ProxiEat
+// ProxiEat Boarding Assistant
 // ============================================
 //
 // This file contains the frontend-only chat experience.
 // No backend, no APIs, no AI — purely hardcoded responses.
 //
 // Architecture notes for future developers:
+// - ProxiE is NOT a feeder controller.
+// - The feeder remains inside the veterinary clinic.
+// - Owners interact with monitoring features only.
 // - processMessage() is the single entry point for ALL user messages.
-//   Whether the user types, clicks a chip, or a future API returns data,
+//   Whether the user types, clicks a suggestion, or a future API returns data,
 //   everything flows through this one function.
-// - getBotResponse() is the only place to replace with AI integration.
+// - hideSuggestedActions() removes the Suggested Actions container after the
+//   first user interaction so they never appear again during the session.
+// - dismissEmptyState() removes the empty-state section with a fade + translateY
+//   animation after the user sends their first message. It never reappears
+//   during the same session.
+// - detectIntent() determines the user's intent by matching keywords.
+// - generateResponse() picks a random response for a given intent
+//   and returns contextual follow-up suggestions.
 // - The knowledge base (responses object) is where new intents are added.
+// - Each intent now supports a `suggestions` array for contextual
+//   follow-up prompts shown after the bot responds.
 // ============================================
 
 // ============================================
@@ -24,7 +36,96 @@ const form = document.getElementById("chatbot-form");
 const input = document.getElementById("chatbot-input");
 const sendButton = document.getElementById("chatbot-send");
 const messagesList = document.querySelector(".chatbot__messages-list");
-const chips = document.querySelectorAll(".chip");
+
+// All suggested action buttons — used to attach click listeners and to remove on first interaction
+const suggestions = document.querySelectorAll(".chatbot__suggestion");
+
+// Tracks whether the user has interacted with the chat (first message sent)
+// After the first interaction, suggested actions are permanently hidden.
+let suggestionsDismissed = false;
+
+// Tracks whether the empty-state section has been dismissed.
+// The empty state is shown on first open and removed after the user
+// sends their first message. It never reappears during the session.
+let emptyStateDismissed = false;
+
+// Lightweight conversation context.
+// Remembers the last successfully detected intent so that vague follow-up
+// messages (e.g. "what about that?", "how?", "okay") can be handled
+// without requiring the user to re-state their intent.
+//
+// This is a single-topic memory — it only tracks the most recent intent.
+// In a future phase, this will be replaced by AI conversation history
+// that maintains full context across multiple turns.
+let currentIntent = null;
+
+// Phrases that indicate the user is following up on the previous topic
+// rather than starting a new conversation thread.
+// These are checked when detectIntent() finds no keyword match,
+// allowing the chatbot to reuse the current intent instead of falling back.
+const VAGUE_FOLLOW_UP_PHRASES = [
+    'what about that',
+    'can I change it',
+    'how',
+    'why',
+    'when',
+    'where',
+    'really?',
+    'okay'
+];
+
+// ============================================
+// Suggested Actions Helper
+// ============================================
+
+/**
+ * Removes the Suggested Actions container from the DOM and marks it as dismissed.
+ *
+ * Exists as a single source of truth for hiding suggestions so they are never
+ * shown again during the current session. Once the user has interacted, the
+ * quick-action prompts are no longer relevant and cluttering the UI.
+ */
+function hideSuggestedActions() {
+    if (suggestionsDismissed) {
+        return;
+    }
+
+    const container = document.getElementById("chatbot-suggested-actions");
+    if (container) {
+        container.remove();
+    }
+
+    suggestionsDismissed = true;
+}
+
+/**
+ * Dismisses the empty-state section with a fade + translateY animation.
+ * Called once when the user sends their first message.
+ * The empty state never reappears during the same session.
+ *
+ * The animation duration (300ms) matches the CSS --proxie-transition-fast
+ * timing so the removal feels snappy and consistent with the design system.
+ */
+function dismissEmptyState() {
+    if (emptyStateDismissed) {
+        return;
+    }
+
+    const emptyState = document.getElementById("chatbot-empty-state");
+    if (!emptyState) {
+        emptyStateDismissed = true;
+        return;
+    }
+
+    emptyState.classList.add("is-dismissing");
+
+    // Wait for the dismiss animation to finish before removing from DOM
+    emptyState.addEventListener("animationend", () => {
+        emptyState.remove();
+    }, { once: true });
+
+    emptyStateDismissed = true;
+}
 
 // ============================================
 // Chatbot Open / Close
@@ -236,64 +337,108 @@ const responses = {
     greeting: {
         keywords: ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening'],
         responses: [
-            "Hello! 👋 I'm ProxiE, your ProxiEat assistant.\n\nI can help you with:\n\n• Device Status\n• Feeding Schedule\n• Analytics\n• Boarding Services\n• General Support\n\nHow can I assist you today?",
-            "Hi there! 👋 I'm ProxiE, your ProxiEat assistant.\n\nI can help you with:\n\n• Device Status\n• Feeding Schedule\n• Analytics\n• Boarding Services\n• General Support\n\nHow can I assist you today?",
-            "Welcome back! 👋 I'm ProxiE, your ProxiEat assistant.\n\nI can help you with:\n\n• Device Status\n• Feeding Schedule\n• Analytics\n• Boarding Services\n• General Support\n\nHow can I assist you today?",
-            "Nice to see you! 👋 I'm ProxiE, your ProxiEat assistant.\n\nI can help you with:\n\n• Device Status\n• Feeding Schedule\n• Analytics\n• Boarding Services\n• General Support\n\nHow can I assist you today?"
+            "Hello! 👋\n\nI'm ProxiE, your ProxiEat boarding assistant.\n\nI can help you monitor your pet during their stay at our veterinary clinic.\n\nI can answer questions about:\n\n• Boarding\n• Feeding schedules\n• Device Status\n• Analytics\n• Reservations\n• General Support\n\nHow can I help you today?",
+            "Hi there! 👋\n\nI'm ProxiE, your ProxiEat boarding assistant.\n\nI can help you monitor your pet during their stay at our veterinary clinic.\n\nI can answer questions about:\n\n• Boarding\n• Feeding schedules\n• Device Status\n• Analytics\n• Reservations\n• General Support\n\nHow can I help you today?",
+            "Welcome back! 👋\n\nI'm ProxiE, your ProxiEat boarding assistant.\n\nI can help you monitor your pet during their stay at our veterinary clinic.\n\nI can answer questions about:\n\n• Boarding\n• Feeding schedules\n• Device Status\n• Analytics\n• Reservations\n• General Support\n\nHow can I help you today?",
+            "Nice to see you! 👋\n\nI'm ProxiE, your ProxiEat boarding assistant.\n\nI can help you monitor your pet during their stay at our veterinary clinic.\n\nI can answer questions about:\n\n• Boarding\n• Feeding schedules\n• Device Status\n• Analytics\n• Reservations\n• General Support\n\nHow can I help you today?"
+        ],
+        suggestions: [
+            "Device Status",
+            "Feeding Schedule",
+            "Analytics",
+            "Boarding",
+            "Reservations",
+            "Support"
         ]
     },
     device: {
         keywords: ['device', 'status', 'offline', 'online', 'wifi', 'network', 'connection'],
         responses: [
-            "You can check your feeder's connection status from the Device Status page.\n\nIf your feeder appears offline, make sure it is powered on and connected to Wi-Fi."
+            "You can view your pet's feeder status from the Device Status page on the dashboard.\n\nIf the feeder appears offline or there are connectivity issues, veterinary staff will restore the connection and handle device maintenance as needed."
+        ],
+        suggestions: [
+            "Feeding Schedule",
+            "Analytics",
+            "Boarding"
         ]
     },
     feeding: {
         keywords: ['feed', 'feeding', 'schedule', 'food', 'meal'],
         responses: [
-            "Feeding schedules can be managed from the Feeding Schedule page.\n\nFor your pet's safety, feeding actions cannot be performed through the chatbot."
+            "Feeding schedules are managed by the veterinary clinic staff.\n\nThe chatbot cannot dispense food or perform feeding actions.\n\nAll feeding operations are performed by authorized clinic staff during your pet's stay."
+        ],
+        suggestions: [
+            "Device Status",
+            "Analytics",
+            "Boarding"
         ]
     },
     analytics: {
         keywords: ['analytics', 'history', 'logs', 'reports', 'statistics', 'graph'],
         responses: [
-            "The Analytics page provides feeding history, activity records, and trends collected by your ProxiEat feeder."
+            "The Analytics page provides monitoring information collected while your pet is boarding.\n\nExamples include:\n\n• Feeding history\n• Food consumption\n• Feeder activity\n• Boarding records\n\nThis data is accessible from the dashboard."
+        ],
+        suggestions: [
+            "Device Status",
+            "Feeding Schedule",
+            "Boarding"
         ]
     },
     support: {
         keywords: ['support', 'help', 'problem', 'issue', 'broken', 'error'],
         responses: [
-            "I'm here to help.\n\nPlease describe your issue in more detail and I'll guide you to the appropriate feature or solution."
+            "I'm here to help with questions about the ProxiEat boarding system.\n\nIf your issue requires staff intervention — such as device maintenance, refilling food, or cleaning the feeder — please contact the veterinary clinic directly.\n\nFor general questions about features and monitoring, I'm happy to assist."
+        ],
+        suggestions: [
+            "Device Status",
+            "Feeding Schedule",
+            "Analytics"
         ]
     },
     boarding: {
         keywords: ['boarding', 'booking', 'reservation', 'hotel'],
         responses: [
-            "Boarding reservations can be managed through the Boarding page where you can view availability and complete bookings."
+            "ProxiEat provides a boarding monitoring experience for pets staying at our veterinary clinic.\n\nYou can:\n\n• Monitor your pet's status from the dashboard\n• Review boarding information and records\n• View and manage reservations\n• Access updates from the clinic\n\nThe smart feeder is located inside the veterinary clinic and is maintained by clinic staff."
+        ],
+        suggestions: [
+            "Device Status",
+            "Feeding Schedule",
+            "Analytics"
         ]
     },
     fallback: {
         responses: [
-            "I'm sorry, I don't have an answer for that yet.\n\nTry asking me about:\n\n• Device Status\n• Feeding Schedule\n• Analytics\n• Boarding\n• Support",
-            "I'm still learning. More features are coming soon!\n\nIn the meantime, you can ask me about:\n\n• Device Status\n• Feeding Schedule\n• Analytics\n• Boarding\n• Support"
-        ]
+            "I'm sorry, I don't have an answer for that yet.\n\nTry asking me about:\n\n• Boarding\n• Feeding schedules\n• Device Status\n• Analytics\n• Reservations\n• Support",
+            "I'm still learning. More features are coming soon!\n\nIn the meantime, you can ask me about:\n\n• Boarding\n• Feeding schedules\n• Device Status\n• Analytics\n• Reservations\n• Support"
+        ],
+        suggestions: []
     }
 };
 
 /**
- * Determines the bot's response based on the user's message.
- *
- * Uses partial keyword matching against the knowledge base.
- * If multiple intents match, the first matching intent is used.
- * If no intent matches, a random fallback response is returned.
- *
- * Future: Replace this function body with a fetch() call to the backend AI endpoint.
- * The knowledge base can be sent as context/prompt to the AI model.
- *
- * @param {string} text - The user's message
- * @returns {string} Bot response
- */
-function getBotResponse(text) {
+  * Detects the user's intent by matching their message against
+  * keyword patterns in the knowledge base.
+  *
+  * Normalizes the message, then searches every intent's keywords
+  * using partial matching. Returns the first matching intent name.
+  * If no intent matches, checks for vague follow-up phrases.
+  * If a follow-up is detected and a currentIntent exists,
+  * reuses the current intent instead of returning "fallback".
+  * Otherwise, returns "fallback".
+  *
+  * Side effect: when a non-fallback intent is detected, stores it
+  * in currentIntent so follow-up messages can be handled.
+  *
+  * This function only determines the intent — it does not return
+  * a response. That responsibility belongs to generateResponse().
+  *
+  * Future: Replace keyword matching with an AI classification call
+  * that returns an intent label and confidence score.
+  *
+  * @param {string} text - The user's message
+  * @returns {string} The detected intent name
+  */
+function detectIntent(text) {
     const normalized = text.toLowerCase().trim();
 
     // Check each intent for keyword matches (partial matching)
@@ -304,16 +449,55 @@ function getBotResponse(text) {
         const matched = intentData.keywords.some(keyword => normalized.includes(keyword));
 
         if (matched) {
-            // Return a random response from this intent's response array
-            const randomIndex = Math.floor(Math.random() * intentData.responses.length);
-            return intentData.responses[randomIndex];
+            // Store the detected intent for follow-up context
+            currentIntent = intent;
+            return intent;
         }
     }
 
-    // No intent matched — return a random fallback response
-    const fallbackResponses = responses.fallback.responses;
-    const randomIndex = Math.floor(Math.random() * fallbackResponses.length);
-    return fallbackResponses[randomIndex];
+    // No keyword match — check if this is a vague follow-up
+    // to the previous topic (e.g. "what about that?", "how?", "okay")
+    const isFollowUp = VAGUE_FOLLOW_UP_PHRASES.some(phrase => normalized.includes(phrase));
+
+    if (isFollowUp && currentIntent !== null) {
+        // Reuse the previous intent so the conversation flows naturally
+        return currentIntent;
+    }
+
+    // No intent matched and not a follow-up — return fallback
+    return 'fallback';
+}
+
+/**
+  * Generates a bot response for a given intent.
+  *
+  * Randomly selects one response from the intent's response array
+  * and returns it alongside the intent's contextual follow-up suggestions.
+  *
+  * If the intent has no responses (e.g. malformed data), returns
+  * a safe default message with an empty suggestions array.
+  *
+  * Future: Replace random selection with an AI-generated response
+  * based on the intent and conversation context.
+  *
+  * @param {string} intent - The detected intent name
+  * @returns {{ text: string, suggestions: string[] }} Response object with text and follow-up suggestions
+  */
+function generateResponse(intent) {
+    const intentData = responses[intent];
+
+    if (!intentData || !intentData.responses || intentData.responses.length === 0) {
+        return {
+            text: "I'm sorry, something went wrong. Please try again.",
+            suggestions: []
+        };
+    }
+
+    const randomIndex = Math.floor(Math.random() * intentData.responses.length);
+    const text = intentData.responses[randomIndex];
+    const suggestions = intentData.suggestions || [];
+
+    return { text, suggestions };
 }
 
 // ============================================
@@ -321,27 +505,42 @@ function getBotResponse(text) {
 // ============================================
 
 /**
- * The single pipeline for processing every user message.
- *
- * This function is called by:
- * - Keyboard input (form submit)
- * - Send button click
- * - Quick action chips
- *
- * Flow:
- * 1. Add user message to chat
- * 2. Show typing indicator
- * 3. Wait 500–700ms
- * 4. Hide typing indicator
- * 5. Generate bot response
- * 6. Add bot response to chat
- *
- * Future: Step 3 will be replaced by an async fetch() to the backend.
- * The typing indicator will show while waiting for the API response.
- *
- * @param {string} text - The user's message text
- */
+    * The single pipeline for processing every user message.
+    *
+    * This function is called by:
+    * - Keyboard input (form submit)
+    * - Send button click
+    * - Suggested action buttons
+    *
+    * All messages flow through this one function so there is a
+    * single source of truth for message handling. No duplicate
+    * logic exists for different input sources.
+    *
+    * Flow:
+    * 1. Hide suggested actions (first interaction only)
+    * 2. Add user message to chat
+    * 3. Show typing indicator
+    * 4. Wait 500–700ms
+    * 5. Hide typing indicator
+    * 6. detectIntent() — classify the user's message
+    * 7. generateResponse() — produce a response for the detected intent
+    * 8. Add bot response to chat
+    *
+    * ProxiE is a boarding assistant — it does not control the feeder.
+    * The feeder remains inside the veterinary clinic and is managed by clinic staff.
+    * Owners interact with monitoring features only.
+    *
+    * Future: Steps 6–7 will be replaced by an async fetch() to the backend.
+    * The typing indicator will show while waiting for the API response.
+    *
+    * @param {string} text - The user's message text
+    */
 function processMessage(text) {
+    // Dismiss suggested actions and empty state on first interaction
+    // so they never appear again during this session (ChatGPT-style behavior)
+    hideSuggestedActions();
+    dismissEmptyState();
+
     // Add the user's message immediately
     addUserMessage(text);
 
@@ -356,9 +555,18 @@ function processMessage(text) {
         // Remove typing indicator before rendering the actual response
         hideTypingIndicator();
 
-        // Generate response from knowledge base (or AI in future phases)
-        const response = getBotResponse(text);
-        addBotMessage(response);
+        // Intent Engine pipeline: detect intent, then generate response
+        const intent = detectIntent(text);
+        const response = generateResponse(intent);
+
+        // Render the response text in the chat as before
+        addBotMessage(response.text);
+
+        // TODO (Phase 4): Render contextual follow-up suggestions beneath
+        // the bot response in the UI. For now, log them to the console
+        // so developers can verify the data structure is correct.
+        // Future: replace this with DOM rendering of suggestion buttons.
+        console.log(response.suggestions);
     }, delay);
 }
 
@@ -402,35 +610,35 @@ function updateSendButtonState() {
 }
 
 // ============================================
-// Quick Action Chips
+// Suggested Actions
 // ============================================
 
 /**
- * Handles quick action chip clicks.
- * Extracts the chip label text and sends it through the same processMessage()
- * pipeline used by manual input.
- *
- * Future: Chips may send structured data (data-action IDs) to the backend
- * instead of plain text. The backend will then return the appropriate response.
- *
- * @param {Event} event - Chip click event
- */
-function handleChipClick(event) {
-    const chip = event.currentTarget;
-    const labelElement = chip.querySelector(".chip__label");
+  * Handles suggested action button clicks.
+  * Extracts the suggestion text and sends it through the same processMessage()
+  * pipeline used by manual input.
+  *
+  * Future: Suggestions may send structured data (data-action IDs) to the backend
+  * instead of plain text. The backend will then return the appropriate response.
+  *
+  * @param {Event} event - Suggestion click event
+  */
+function handleSuggestionClick(event) {
+    const suggestion = event.currentTarget;
+    const textElement = suggestion.querySelector(".chatbot__suggestion-text");
 
-    if (!labelElement) {
+    if (!textElement) {
         return;
     }
 
-    const chipText = labelElement.textContent.trim();
+    const suggestionText = textElement.textContent.trim();
 
-    if (!chipText) {
+    if (!suggestionText) {
         return;
     }
 
-    // Send the chip text through the same conversation pipeline
-    processMessage(chipText);
+    // Send the suggestion text through the same conversation pipeline
+    processMessage(suggestionText);
 }
 
 // ============================================
@@ -452,7 +660,7 @@ input.addEventListener("input", updateSendButtonState);
 // Initialize send button state on page load
 updateSendButtonState();
 
-// Attach click handlers to all quick action chips
-chips.forEach(chip => {
-    chip.addEventListener("click", handleChipClick);
+// Attach click handlers to all suggested action buttons
+suggestions.forEach(suggestion => {
+    suggestion.addEventListener("click", handleSuggestionClick);
 });

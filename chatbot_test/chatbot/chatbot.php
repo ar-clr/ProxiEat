@@ -1,7 +1,7 @@
 <?php
 /**
  * ProxiE Chatbot Widget
- * IoT Web Application - ProxiEat
+ * ProxiEat Boarding Assistant
  * 
  * HTML structure for the ProxiE chatbot interface.
  * Styling:  chatbot.css
@@ -66,7 +66,7 @@
                 </div>
                 <div class="chatbot__header-info">
                     <h2 class="chatbot__header-title">ProxiE</h2>
-                    <p class="chatbot__header-subtitle">Your IoT Assistant</p>
+                    <p class="chatbot__header-subtitle">Your ProxiEat Boarding Assistant</p>
                 </div>
             </div>
             <button
@@ -96,48 +96,68 @@
         >
             <div class="chatbot__messages-list">
 
-                <!-- Bot Welcome Message -->
-                <article class="message message--bot">
-                    <div class="message__avatar" aria-hidden="true">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                            <path d="M8 14s1.5 2 4 2 4-2 4-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            <circle cx="9" cy="9" r="1" fill="currentColor"/>
-                            <circle cx="15" cy="9" r="1" fill="currentColor"/>
-                        </svg>
-                    </div>
-                    <div class="message__body">
-                        <div class="message__content">
-                            <p>Hello! I'm <strong>ProxiE</strong>, your ProxiEat IoT assistant. How can I help you today?</p>
-                        </div>
-                        <footer class="message__meta">
-                            <time class="message__timestamp" datetime="2026-07-27T18:34:22+08:00">Just now</time>
-                        </footer>
-                    </div>
-                </article>
+<!-- Empty Conversation State
+             Shown when the chatbot is opened for the first time in a session.
+             Replaced by the chat history after the user sends their first message.
+             This empty state provides a modern ChatGPT-like onboarding experience,
+             introducing ProxiE and its capabilities before any interaction occurs.
+             Future: AI personalization could tailor the greeting, description,
+             and suggested actions based on the user's pet profile or history. -->
+                  <div class="chatbot__empty-state" id="chatbot-empty-state">
+                      <div class="chatbot__empty-avatar" aria-hidden="true">
+                          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                              <path d="M8 14s1.5 2 4 2 4-2 4-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                              <circle cx="9" cy="9" r="1" fill="currentColor"/>
+                              <circle cx="15" cy="9" r="1" fill="currentColor"/>
+                          </svg>
+                      </div>
+                      <h2 class="chatbot__empty-title">Hi, I'm ProxiE</h2>
+                      <p class="chatbot__empty-subtitle">Your ProxiEat Boarding Assistant</p>
+                      <p class="chatbot__empty-description">
+                          I can answer questions about your pet's boarding stay, feeding schedules, device status, analytics, reservations, and support.
+                      </p>
+                  </div>
 
-            </div>
-        </main>
+                 <!-- Suggested Actions (rendered by JS, removed after first interaction) -->
+                 <div class="chatbot__suggested-actions" id="chatbot-suggested-actions">
+                     <div class="chatbot__suggestions">
+                         <button class="chatbot__suggestion" type="button" data-suggestion="Device Status">
+                             <span class="chatbot__suggestion-icon" aria-hidden="true">📡</span>
+                             <span class="chatbot__suggestion-text">Device Status</span>
+                         </button>
+                         <button class="chatbot__suggestion" type="button" data-suggestion="Feeding Schedule">
+                             <span class="chatbot__suggestion-icon" aria-hidden="true">🍽</span>
+                             <span class="chatbot__suggestion-text">Feeding Schedule</span>
+                         </button>
+                         <button class="chatbot__suggestion" type="button" data-suggestion="Analytics">
+                             <span class="chatbot__suggestion-icon" aria-hidden="true">📊</span>
+                             <span class="chatbot__suggestion-text">Analytics</span>
+                         </button>
+                         <button class="chatbot__suggestion" type="button" data-suggestion="Boarding">
+                             <span class="chatbot__suggestion-icon" aria-hidden="true">🏨</span>
+                             <span class="chatbot__suggestion-text">Boarding</span>
+                         </button>
+                         <button class="chatbot__suggestion" type="button" data-suggestion="Reservations">
+                             <span class="chatbot__suggestion-icon" aria-hidden="true">📅</span>
+                             <span class="chatbot__suggestion-text">Reservations</span>
+                         </button>
+                         <button class="chatbot__suggestion" type="button" data-suggestion="Support">
+                             <span class="chatbot__suggestion-icon" aria-hidden="true">💬</span>
+                             <span class="chatbot__suggestion-text">Support</span>
+                         </button>
+                     </div>
+                 </div>
 
-        <!-- ============================================
-             QUICK ACTION CHIPS
-             ============================================ -->
-        <nav class="chatbot__quick-actions" aria-label="Quick actions">
-            <div class="chatbot__quick-actions-list">
-                <button class="chip" type="button" data-action="check-status">
-                    <span class="chip__icon" aria-hidden="true">📡</span>
-                    <span class="chip__label">Device Status</span>
-                </button>
-                <button class="chip" type="button" data-action="view-analytics">
-                    <span class="chip__icon" aria-hidden="true">📊</span>
-                    <span class="chip__label">Analytics</span>
-                </button>
-                <button class="chip" type="button" data-action="get-support">
-                    <span class="chip__icon" aria-hidden="true">🛟</span>
-                    <span class="chip__label">Support</span>
-                </button>
-            </div>
-        </nav>
+             </div>
+         </main>
+
+<!-- ============================================
+              SUGGESTED ACTIONS
+              Rendered inside the conversation by JavaScript.
+              Appears only before the user's first interaction.
+              Removed alongside the empty-state section on first message.
+              ============================================ -->
 
         <!-- ============================================
              INPUT SECTION
@@ -176,5 +196,9 @@
     </div>
 
     <script src="chatbot.js"></script>
+    <script src="chatbot-renderer.js"></script>
+    <script src="chatbot-ui.js"></script>
+    <script src="chatbot-typing.js"></script>
+    <script src="chatbot-engine.js"></script>
 </body>
 </html>
