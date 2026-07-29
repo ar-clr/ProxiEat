@@ -14,7 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProxiE - ProxiEat Chatbot</title>
-    <link rel="stylesheet" href="chatbot.css">
+    <link rel="stylesheet" href="assets/css/chatbot.css">
 </head>
 <body>
 
@@ -104,14 +104,11 @@
              Future: AI personalization could tailor the greeting, description,
              and suggested actions based on the user's pet profile or history. -->
                   <div class="chatbot__empty-state" id="chatbot-empty-state">
-                      <div class="chatbot__empty-avatar" aria-hidden="true">
-                          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                              <path d="M8 14s1.5 2 4 2 4-2 4-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                              <circle cx="9" cy="9" r="1" fill="currentColor"/>
-                              <circle cx="15" cy="9" r="1" fill="currentColor"/>
-                          </svg>
-                      </div>
+                   <img
+                       src="assets/proxie-logo.png"
+                       alt="ProxiEat Assistant"
+                       class="chatbot__empty-image"
+                   >
                       <h2 class="chatbot__empty-title">Hi, I'm ProxiE</h2>
                       <p class="chatbot__empty-subtitle">Your ProxiEat Boarding Assistant</p>
                       <p class="chatbot__empty-description">
@@ -194,11 +191,14 @@
         </footer>
 
     </div>
+    <script src="assets/js/vendor/markdown.js"></script>
+    <!-- <script src="assets/js/vendor/purify.min.js"></script> -->
 
-    <script src="chatbot.js"></script>
-    <script src="chatbot-renderer.js"></script>
-    <script src="chatbot-ui.js"></script>
-    <script src="chatbot-typing.js"></script>
-    <script src="chatbot-engine.js"></script>
+    <script src="assets/js/chatbot-renderer.js"></script>
+    <script src="assets/js/chatbot-ui.js"></script>
+    <script src="assets/js/chatbot-typing.js"></script>
+    <script src="assets/js/chatbot-ai.js"></script>
+    <script src="assets/js/chatbot-engine.js"></script>
+    <script src="assets/js/chatbot.js"></script>
 </body>
 </html>

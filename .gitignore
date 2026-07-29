@@ -1,0 +1,4 @@
+# Secrets
+chatbot/config/gemini.php
+.env
+.env.*

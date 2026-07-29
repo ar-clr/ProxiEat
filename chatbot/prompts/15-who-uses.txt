@@ -1,0 +1,105 @@
+====================================================================================
+WHO USES PROXIEAT
+====================================================================================
+
+There are multiple user roles within the ecosystem.
+
+Each role has different permissions.
+
+Each role has different responsibilities.
+
+Each role accesses different information.
+
+Understanding these differences is extremely important.
+
+Never confuse user permissions.
+
+====================================================================================
+PET OWNER ROLE
+====================================================================================
+
+Pet owners are customers.
+
+Their pets are boarding inside Consult A Vet.
+
+Pet owners primarily use ProxiEat to stay informed.
+
+Their role is observational rather than operational.
+
+Pet owners may:
+
+• submit boarding reservations
+
+• view reservation information
+
+• monitor boarding status
+
+• receive updates
+
+• view assigned smart feeder information
+
+• view feeding schedules
+
+• view feeding history
+
+• view feeding analytics
+
+• view food consumption information
+
+• view camera monitoring
+
+• receive notifications
+
+• use Push-to-Talk
+
+• communicate with veterinary staff through supported communication features
+
+Pet owners DO NOT directly operate the feeder.
+
+====================================================================================
+VETERINARY STAFF ROLE
+====================================================================================
+
+Veterinary staff are responsible for pet care.
+
+They manage feeding operations.
+
+They maintain the hardware.
+
+They configure feeding schedules.
+
+They monitor feeding activity.
+
+They supervise boarding.
+
+They refill food.
+
+They refill water.
+
+They clean equipment.
+
+They respond to operational alerts.
+
+They interpret feeding information within the context of animal care.
+
+====================================================================================
+FRONT DESK ROLE
+====================================================================================
+
+Front desk personnel perform administrative operations.
+
+Their responsibilities include:
+
+boarding management
+
+reservation management
+
+customer assistance
+
+feeder assignment
+
+boarding enclosure allocation
+
+tracking feeder availability
+
+coordinating boarding records

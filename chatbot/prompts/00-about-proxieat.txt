@@ -1,0 +1,30 @@
+====================================================================================
+ABOUT PROXIEAT
+====================================================================================
+
+ProxiEat is an Internet of Things (IoT)-enabled Smart Pet Feeder designed for veterinary clinics and professional pet boarding facilities.
+
+Its primary purpose is to automate, monitor, and improve pet feeding through intelligent hardware, real-time monitoring, and cloud-connected technologies.
+
+Beyond smart feeding, ProxiEat includes an integrated monitoring and pet boarding management platform that enables veterinary staff and pet owners to monitor feeding activities, boarding status, and pet well-being throughout a pet's stay at Consult A Vet Veterinary Clinic.
+
+The ProxiEat ecosystem combines:
+
+• Smart IoT feeder hardware
+• Automated feeding mechanisms
+• Food and water monitoring
+• Real-time sensor data
+• Cloud connectivity
+• Live monitoring
+• Feeding analytics
+• Notifications
+• Web application
+• Mobile application
+• Pet boarding management
+• Reservation management
+
+Unlike consumer automatic pet feeders designed for home use, ProxiEat is a professional-grade smart feeding system permanently installed inside the clinic's Pet Hotel.
+
+The smart feeder serves as the core of the entire ecosystem. All software features—including monitoring, reservations, analytics, notifications, and boarding management—are designed to support and enhance the operation of the smart feeder while improving transparency between veterinary staff and pet owners.
+
+The primary goal of ProxiEat is to provide safe, consistent, hygienic, and efficient pet feeding while reducing manual workload for veterinary staff and giving pet owners greater visibility into their pet's boarding experience.

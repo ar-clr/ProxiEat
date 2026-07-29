@@ -70,6 +70,33 @@ function addUserMessage(text) {
 }
 
 /**
+ * Initializes interactive actions for bot messages.
+ * Future actions (Regenerate, Like, Dislike, etc.) can be added here.
+ *
+ * @param {HTMLElement} article - The bot message article element
+ */
+function initMessageActions(article) {
+    const copyButton = article.querySelector(".message__action");
+    if (!copyButton) return;
+
+    copyButton.addEventListener("click", async () => {
+        const messageText =
+            article.querySelector(".message__content")?.innerText || "";
+        try {
+            await navigator.clipboard.writeText(messageText);
+            copyButton.classList.add("is-copied");
+            copyButton.setAttribute("aria-label", "Copied");
+            setTimeout(() => {
+                copyButton.classList.remove("is-copied");
+                copyButton.setAttribute("aria-label", "Copy message");
+            }, 1500);
+        } catch (err) {
+            console.error("Failed to copy message text:", err);
+        }
+    });
+}
+
+/**
  * Creates a bot message element and appends it to the chat.
  *
  * @param {string} text - The response text from the bot
@@ -88,8 +115,21 @@ function addBotMessage(text) {
             </svg>
         </div>
         <div class="message__body">
-            <div class="message__content">
-                <p>${escapeHtml(text)}</p>
+            <div class="message__actions">
+                <!-- Future actions: Regenerate, Like, Dislike -->
+                <button class="message__action" aria-label="Copy message" type="button">
+                    <svg class="message__action-icon message__action-icon--copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <svg class="message__action-icon message__action-icon--check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <span class="message__action-label">Copied!</span>
+                </button>
+            </div>
+           <div class="message__content">
+                ${renderMarkdown(text)}
             </div>
             <footer class="message__meta">
                 <time
@@ -104,6 +144,8 @@ function addBotMessage(text) {
 
     messagesList.appendChild(article);
         scrollToBottom();
+
+    initMessageActions(article);
 }
 
 /**
