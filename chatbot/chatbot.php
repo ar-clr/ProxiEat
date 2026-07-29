@@ -14,7 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProxiE - ProxiEat Chatbot</title>
-    <link rel="stylesheet" href="assets/css/chatbot.css">
+    <link rel="stylesheet" href="assets/css/chatbot.css?v=<?= time() ?>">
 </head>
 <body>
 
@@ -194,11 +194,11 @@
     <script src="assets/js/vendor/markdown.js"></script>
     <!-- <script src="assets/js/vendor/purify.min.js"></script> -->
 
-    <script src="assets/js/chatbot-renderer.js"></script>
-    <script src="assets/js/chatbot-ui.js"></script>
-    <script src="assets/js/chatbot-typing.js"></script>
-    <script src="assets/js/chatbot-ai.js"></script>
-    <script src="assets/js/chatbot-engine.js"></script>
-    <script src="assets/js/chatbot.js"></script>
+    <script src="assets/js/chatbot-renderer.js?v=<?= time() ?>"></script>
+    <script src="assets/js/chatbot-ui.js?v=<?= time() ?>"></script>
+    <script src="assets/js/chatbot-typing.js?v=<?= time() ?>"></script>
+    <script src="assets/js/chatbot-ai.js?v=<?= time() ?>"></script>
+    <script src="assets/js/chatbot-engine.js?v=<?= time() ?>"></script>
+    <script src="assets/js/chatbot.js?v=<?= time() ?>"></script>
 </body>
 </html>

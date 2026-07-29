@@ -1,4 +1,5 @@
 # Secrets
 chatbot/config/gemini.php
+image-analysis/config/config.php
 .env
 .env.*
