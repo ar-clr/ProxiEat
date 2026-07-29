@@ -33,6 +33,23 @@ function getCurrentTimestamp() {
 }
 
 /**
+ * Maps Gemini model IDs returned by the backend
+ * to user-friendly names displayed in the chat UI.
+ */
+const MODEL_NAMES = {
+    "gemini-3.6-flash": "Gemini 3.6 Flash",
+    "gemini-3.5-flash": "Gemini 3.5 Flash",
+    "gemini-3-flash": "Gemini 3 Flash",
+    "gemini-3.1-flash-lite": "Gemini 3.1 Flash Lite",
+    "gemini-2.5-flash": "Gemini 2.5 Flash",
+    "gemini-2.5-flash-lite": "Gemini 2.5 Flash Lite"
+};
+
+function getModelName(model) {
+    return MODEL_NAMES[model] ?? "Gemini";
+}
+
+/**
  * Creates a user message element and appends it to the chat.
  *
  * @param {string} text - The message text entered by the user
@@ -131,14 +148,20 @@ function addBotMessage(text) {
            <div class="message__content">
                 ${renderMarkdown(text)}
             </div>
-            <footer class="message__meta">
-                <time
-                    class="message__timestamp"
-                    datetime="${new Date().toISOString()}"
-                >
-                    ${getCurrentTimestamp()}
-                </time>
-            </footer>
+                <footer class="message__meta">
+
+                    <span class="message__model">
+                        ${getModelName(window.currentModel)}
+                    </span>
+
+                    <time
+                        class="message__timestamp"
+                        datetime="${new Date().toISOString()}"
+                    >
+                        ${getCurrentTimestamp()}
+                    </time>
+
+                </footer>
         </div>
     `;
 

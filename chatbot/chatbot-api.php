@@ -2,8 +2,8 @@
 
 header("Content-Type: application/json");
 
-require_once __DIR__ . "/services/gemini-service.php";
 require_once __DIR__ . "/context-builder.php";
+require_once __DIR__ . "/services/gemini-service.php";
 
 // Read user input
 $input = json_decode(file_get_contents("php://input"), true);
