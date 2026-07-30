@@ -14,7 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProxiE - ProxiEat Chatbot</title>
-    <link rel="stylesheet" href="assets/css/chatbot.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../assets/css/components/chatbot/chatbot.css?v=<?= time() ?>">
 </head>
 <body>
 
@@ -31,7 +31,7 @@
     >
             <span class="chatbot__toggle-icon" aria-hidden="true">
                 <img
-                    src="assets/proxie-logo.png"
+                    src="../assets/images/chatbot/proxie-logo.png"
                     alt=""
                     class="chatbot__toggle-image"
                 >
@@ -105,7 +105,7 @@
              and suggested actions based on the user's pet profile or history. -->
                   <div class="chatbot__empty-state" id="chatbot-empty-state">
                    <img
-                       src="assets/proxie-logo.png"
+                       src="../assets/images/chatbot/proxie-logo.png"
                        alt="ProxiEat Assistant"
                        class="chatbot__empty-image"
                    >
@@ -191,14 +191,14 @@
         </footer>
 
     </div>
-    <script src="assets/js/vendor/markdown.js"></script>
+    <script src="..\assets\vendor\marked\markdown.js?v=<?= time() ?>"></script>
     <!-- <script src="assets/js/vendor/purify.min.js"></script> -->
-
-    <script src="assets/js/chatbot-renderer.js?v=<?= time() ?>"></script>
-    <script src="assets/js/chatbot-ui.js?v=<?= time() ?>"></script>
-    <script src="assets/js/chatbot-typing.js?v=<?= time() ?>"></script>
-    <script src="assets/js/chatbot-ai.js?v=<?= time() ?>"></script>
-    <script src="assets/js/chatbot-engine.js?v=<?= time() ?>"></script>
-    <script src="assets/js/chatbot.js?v=<?= time() ?>"></script>
+     
+    <script src="../assets/js/chatbot/chatbot-ui.js?v=<?= time() ?>"></script>
+    <script src="../assets/js/chatbot/chatbot-renderer.js?v=<?= time() ?>"></script>
+    <script src="../assets/js/chatbot/chatbot-typing.js?v=<?= time() ?>"></script>
+    <script src="../assets/js/chatbot/chatbot-api.js?v=<?= time() ?>"></script>
+    <script src="../assets/js/chatbot/chatbot-controller.js?v=<?= time() ?>"></script>
+    <script src="../assets/js/chatbot/chatbot.js?v=<?= time() ?>"></script>
 </body>
 </html>

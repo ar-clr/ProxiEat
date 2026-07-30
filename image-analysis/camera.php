@@ -10,7 +10,7 @@ require_once __DIR__ . '/config/config.php';
     <title>Image Analysis - ProxiEat</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="assets/css/camera.css?v=<?= time() ?>" rel="stylesheet">
+    <link href="..\assets\css\pages\camera.css?v=<?= time() ?>" rel="stylesheet">
 </head>
 <body>
     <div class="camera-page">
@@ -114,7 +114,7 @@ require_once __DIR__ . '/config/config.php';
                             <div class="capture-preview">
                                 <img
                                     id="latestCapture"
-                                    src="images/placeholder-capture.png"
+                                    src="..\assets\images\camera\placeholder-capture.png"
                                     alt="Latest Capture">
                             </div>
                             <div class="capture-details">
@@ -130,7 +130,7 @@ require_once __DIR__ . '/config/config.php';
                             <div class="capture-actions">
                                 <button class="btn btn-outline-primary btn-sm" type="button">View Full Image</button>
                                 <button class="btn btn-outline-secondary btn-sm" type="button">Download Image</button>
-                                <a href="#" class="capture-gallery-link">View Gallery →</a>
+                                <a href="gallery.php" class="capture-gallery-link">View Gallery →</a>
                             </div>
                             <div class="recent-captures">
                                 <div class="recent-captures-title">Recent Captures</div>
@@ -300,6 +300,6 @@ require_once __DIR__ . '/config/config.php';
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/camera.js?v=<?= time() ?>"></script>
+    <script src="..\assets\js\camera\camera.js?v=<?= time() ?>"></script>
 </body>
 </html>
