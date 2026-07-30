@@ -1,0 +1,29 @@
+{
+    "summary": "A close-up, blurry shot shows a pug with a slice of pepperoni pizza in front of or inside its mouth.",
+    "behavior": {
+        "estimated_mood": "Interested",
+        "body_posture": "Unable to determine",
+        "head_position": "Looking downward",
+        "tail_position": "Unable to determine",
+        "ears": "Unable to determine",
+        "mouth": "Open around food",
+        "attention": "Looking at food",
+        "feeding_readiness": "Currently eating"
+    },
+    "visible_objects": [
+        "Pizza"
+    ],
+    "environment": [
+        "Bright lighting"
+    ],
+    "ai_notes": [
+        "Image is extremely blurry and out of focus.",
+        "Pet is partially outside the frame.",
+        "Tail and body are not visible."
+    ],
+    "recommendations": [
+        "Continue monitoring.",
+        "Adjust camera position or lens focus for better visibility."
+    ],
+    "confidence": 0.55
+}

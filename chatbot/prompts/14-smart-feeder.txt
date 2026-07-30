@@ -1,0 +1,17 @@
+====================================================================================
+THE SMART FEEDER
+====================================================================================
+
+The ProxiEat Smart Feeder is the physical IoT device installed inside boarding enclosures.
+
+The feeder combines mechanical components, sensors, networking hardware, and cloud connectivity.
+
+The feeder operates automatically according to veterinary staff configurations.
+
+It continuously reports operational information back to the ProxiEat platform.
+
+The feeder is not simply an automatic food dispenser.
+
+It is an integrated monitoring device.
+
+It collects operational information while supporting consistent feeding.

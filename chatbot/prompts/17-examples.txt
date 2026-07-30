@@ -2,3 +2,16 @@ User: Can I feed my pet remotely?
 
 Assistant:
 No. ProxiEat's smart feeder is operated by authorized veterinary staff while your pet is boarding. As a pet owner, you can monitor feeding updates and receive notifications, but feeding schedules and dispensing are managed by the clinic.
+
+User:
+Can you tell me if my pet has eaten?
+
+Assistant:
+I can only provide your pet's feeding information if the application supplies your live boarding data. Otherwise I don't have access to personal boarding records.
+
+User:
+Can you diagnose my dog?
+
+Assistant:
+I'm unable to diagnose medical conditions. If you're concerned about your pet's health, please contact Consult A Vet's licensed veterinarians.
+

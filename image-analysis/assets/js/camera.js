@@ -11,6 +11,7 @@
         latestCapture: '#latestCapture',
         cameraStatus: '#cameraStatus',
         captureStatus: '#captureStatus',
+        workspaceStatus: '#workspaceStatus',
         latestCaptureCard: '#latest-capture-title',
         captureModal: '#captureModal',
         captureModalIconWrapper: '#captureModalIconWrapper',
@@ -22,11 +23,31 @@
         captureModalErrorIcon: '#captureModalErrorIcon',
         captureModalStatus: '#captureModalStatus',
         captureModalClose: '#captureModalClose',
+        captureTimestamp: '#captureTimestamp',
         liveViewBtn: '#liveViewBtn',
         liveFeedContainer: '#liveFeedContainer',
         livePauseOverlay: '#livePauseOverlay',
         resumeLiveViewBtn: '#resumeLiveViewBtn',
-        liveViewToast: '#liveViewToast'
+        liveViewToast: '#liveViewToast',
+        analysisEmpty: '.analysis-empty',
+        analysisLoading: '.analysis-loading',
+        analysisResults: '.analysis-results',
+        resultSummary: '.result-summary',
+        resultCardValue: '.result-value',
+        analysisMood: '#analysisMood',
+        analysisPosture: '#analysisPosture',
+        analysisHead: '#analysisHead',
+        analysisTail: '#analysisTail',
+        analysisAttention: '#analysisAttention',
+        analysisConfidence: '#analysisConfidence',
+        analysisSummary: '#analysisSummary',
+        analysisNotes: '#analysisNotes',
+        analysisRecommendations: '#analysisRecommendations',
+        analysisObjects: '#analysisObjects',
+        analysisEnvironment: '#analysisEnvironment',
+        analysisEars: '#analysisEars',
+        analysisMouth: '#analysisMouth',
+        analysisFeeding: '#analysisFeeding'
     };
 
     const STATUS_TEXT = {
@@ -52,6 +73,7 @@
     let inactivityTimer = null;
     let isLiveViewActive = false;
     let originalStreamUrl = '';
+    let isAnalyzing = false;
 
     const refs = {};
     let currentStatus = '';
@@ -63,13 +85,21 @@
         });
     }
 
-    function setStatus(status) {
-        if (currentStatus === status) return;
-        currentStatus = status;
-        const el = refs.cameraStatus;
+function setStatus(status) {
+    if (currentStatus === status) return;
+    currentStatus = status;
+    const badges = [
+        refs.cameraStatus,
+        refs.workspaceStatus
+    ];
+    badges.forEach(function (el) {
         if (!el) return;
         el.textContent = status;
-        el.classList.remove('status-capturing', 'status-error', 'status-paused');
+        el.classList.remove(
+            'status-capturing',
+            'status-error',
+            'status-paused'
+        );
         if (status === STATUS_TEXT.capturing) {
             el.classList.add('status-capturing');
         }
@@ -79,7 +109,8 @@
         if (status === STATUS_TEXT.paused) {
             el.classList.add('status-paused');
         }
-    }
+    });
+}
 
     function restoreButton() {
         const btn = refs.captureBtn;
@@ -112,14 +143,231 @@
     function handleCaptureSuccess(data) {
         const latestCapture = refs.latestCapture;
         const captureStatus = refs.captureStatus;
+        const captureTimestamp = refs.captureTimestamp;
+
         if (latestCapture) {
             latestCapture.src = data.image + '?t=' + Date.now();
         }
+        if (captureTimestamp) {
+            captureTimestamp.textContent = data.timestamp;
+        }
         if (captureStatus) {
-            captureStatus.textContent = 'Captured successfully at ' + data.timestamp;
+            captureStatus.textContent = 'Latest capture saved.';
         }
         showAlert(data.message, 'success');
         restoreButton();
+        startAnalysis();
+    }
+
+    function fadeOutElement(el) {
+        if (!el) return;
+        el.style.opacity = '0';
+        el.style.transition = 'opacity 0.4s ease';
+        setTimeout(function () {
+            el.classList.add('d-none');
+            el.style.opacity = '';
+            el.style.transition = '';
+        }, 400);
+    }
+
+    function fadeInElement(el) {
+        if (!el) return;
+        el.classList.remove('d-none');
+        void el.offsetHeight;
+        el.style.opacity = '0';
+        el.style.transition = 'opacity 0.4s ease';
+        requestAnimationFrame(function () {
+            el.style.opacity = '1';
+            setTimeout(function () {
+                el.style.transition = '';
+            }, 400);
+        });
+    }
+
+    function showAnalysisLoading() {
+        var empty = refs.analysisEmpty;
+        var loading = refs.analysisLoading;
+        var results = refs.analysisResults;
+        var chips = loading ? loading.querySelectorAll('.chip') : [];
+        var subtitle = loading ? loading.querySelector('.loading-subtitle') : null;
+
+        if (empty) fadeOutElement(empty);
+        if (results) fadeOutElement(results);
+
+        if (chips.length >= 3) {
+            chips[0].textContent = '\u2713 Looking at posture...';
+            chips[1].textContent = '\u2713 Checking visible body language...';
+            chips[2].textContent = '\u2713 Summarizing observations...';
+        }
+
+        if (subtitle) {
+            subtitle.textContent = "We're looking for visible posture, attention, and body language.";
+        }
+
+        if (loading) fadeInElement(loading);
+    }
+
+    function formatConfidence(value) {
+        if (value === null || value === undefined || value === '' || value === 0) {
+            return 'Unable to determine';
+        }
+        return Math.round(value * 100) + '%';
+    }
+
+    function renderList(container, items, emptyText) {
+        if (!container) return;
+        container.innerHTML = '';
+        if (!Array.isArray(items) || items.length === 0) {
+            container.innerHTML =
+                '<div class="text-muted">' + emptyText + '</div>';
+            return;
+        }
+        items.forEach(function(item){
+            const div = document.createElement('div');
+            div.className = 'analysis-chip';
+            div.textContent = item;
+            container.appendChild(div);
+        });
+    }
+
+function showAnalysisResults(analysis) {
+
+    const loading = refs.analysisLoading;
+    const results = refs.analysisResults;
+
+    if (loading) {
+        fadeOutElement(loading);
+    }
+
+    const behavior = analysis.behavior || {};
+
+    function setValue(ref, value) {
+
+        if (!ref) return;
+
+        ref.textContent = value || 'Unable to determine';
+
+        ref.classList.remove('placeholder');
+
+    }
+
+    // Overall Summary
+    if (refs.analysisSummary) {
+        refs.analysisSummary.textContent =
+            analysis.summary || 'No summary available.';
+    }
+
+    // Behavior
+    setValue(refs.analysisMood, behavior.estimated_mood);
+    setValue(refs.analysisPosture, behavior.body_posture);
+    setValue(refs.analysisHead, behavior.head_position);
+    setValue(refs.analysisTail, behavior.tail_position);
+    setValue(refs.analysisEars, behavior.ears);
+    setValue(refs.analysisMouth, behavior.mouth);
+    setValue(refs.analysisAttention, behavior.attention);
+    setValue(refs.analysisFeeding, behavior.feeding_readiness);
+
+    // Confidence
+    if (refs.analysisConfidence) {
+
+        refs.analysisConfidence.textContent =
+            formatConfidence(analysis.confidence);
+
+        refs.analysisConfidence.classList.remove('placeholder');
+
+    }
+
+    // Visible Objects
+    renderList(
+        refs.analysisObjects,
+        analysis.visible_objects,
+        'No notable objects detected.'
+    );
+
+    // Environment
+    renderList(
+        refs.analysisEnvironment,
+        analysis.environment,
+        'Environment could not be determined.'
+    );
+
+    // AI Notes
+    renderList(
+        refs.analysisNotes,
+        analysis.ai_notes,
+        'No additional notes.'
+    );
+
+    // Recommendations
+    renderList(
+        refs.analysisRecommendations,
+        analysis.recommendations,
+        'No recommendations.'
+    );
+
+    setTimeout(function () {
+        fadeInElement(results);
+    }, 400);
+
+}
+
+    function showAnalysisError() {
+        var loading = refs.analysisLoading;
+        var empty = refs.analysisEmpty;
+
+        if (loading) fadeOutElement(loading);
+
+        if (empty) {
+            var iconWrapper = empty.querySelector('.empty-illustration');
+            var title = empty.querySelector('.empty-title');
+            var text = empty.querySelector('.empty-text');
+
+            if (iconWrapper) {
+                iconWrapper.innerHTML = '<i class="bi bi-exclamation-triangle-fill" style="color:#c93345;"></i>';
+            }
+            if (title) {
+                title.textContent = 'The AI service is temporarily busy. Please try again in a few moments.';
+                title.style.color = '#c93345';
+            }
+            if (text) {
+                text.textContent = "We couldn't analyze your pet this time. Please try capturing another image.";
+            }
+
+            setTimeout(function () {
+                fadeInElement(empty);
+            }, 400);
+        }
+    }
+
+    function startAnalysis() {
+        if (isAnalyzing) return;
+        isAnalyzing = true;
+
+        showAnalysisLoading();
+
+        fetch('analyze.php')
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('HTTP ' + response.status);
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                try {
+                    console.log(data);
+                    showAnalysisResults(data.analysis);
+                } catch (e) {
+                    console.error(e);
+                    alert(e.stack);
+                    throw e;
+                }
+                isAnalyzing = false;
+            })
+            .catch(function (error) {
+                console.error('Analysis error:', error);
+                showAnalysisError();
+                isAnalyzing = false;
+            });
     }
 
     function showCaptureModal() {

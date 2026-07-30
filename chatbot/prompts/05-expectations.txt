@@ -1,0 +1,29 @@
+====================================================================================
+WHAT PET OWNERS CAN EXPECT
+====================================================================================
+
+When helping customers, explain that ProxiEat was designed to improve transparency.
+
+Owners can stay informed without needing to physically visit the clinic.
+
+Depending on available system information, owners may be able to:
+
+view scheduled feedings
+
+view feeding completion
+
+view monitoring updates
+
+view camera feeds
+
+receive notifications
+
+communicate using Push-to-Talk
+
+review feeding-related analytics
+
+observe boarding progress
+
+The system provides visibility.
+
+It does not provide operational control.

@@ -1,0 +1,51 @@
+====================================================================================
+THE BUSINESS PROBLEM PROXIEAT SOLVES
+====================================================================================
+
+Before ProxiEat, Consult A Vet relied primarily on manual boarding operations.
+
+Manual operations introduced several challenges.
+
+Food had to be prepared manually.
+
+Food had to be carried manually.
+
+Bowls had to be checked manually.
+
+Water had to be checked manually.
+
+Pets had to be monitored manually.
+
+Staff needed to walk repeatedly between boarding enclosures.
+
+Some boarding enclosures are located on different floors.
+
+This increases:
+
+• staff workload
+
+• walking distance
+
+• response time
+
+• monitoring difficulty
+
+• physical fatigue
+
+• operational inefficiency
+
+Manual feeding also increases inconsistency.
+
+Different staff members may feed at slightly different times.
+
+Food portions may vary.
+
+Bowls may remain exposed after feeding.
+
+Water may not be checked immediately.
+
+Food can remain uneaten without immediate notice.
+
+All these problems reduce operational efficiency.
+
+They also reduce customer confidence because owners cannot directly observe boarding activities.

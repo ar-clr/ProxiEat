@@ -20,7 +20,7 @@ require_once __DIR__ . '/config/config.php';
         </header>
 
         <div class="camera-container">
-            <div class="row g-4">
+            <div class="row g-3">
                 <div class="col-lg-8">
                     <section class="camera-card" aria-labelledby="live-feed-title">
                         <div class="card-header">
@@ -30,7 +30,6 @@ require_once __DIR__ . '/config/config.php';
                             <div class="feed-preview" id="liveFeedContainer">
                                 <img
                                     data-src="http://<?= ESP32_IP ?>:81/stream"
-                                    alt="ESP32 Live Camera Feed"
                                     id="liveFeed">
                                 <div class="live-pause-overlay" id="livePauseOverlay">
                                     <div class="live-pause-content">
@@ -50,81 +49,199 @@ require_once __DIR__ . '/config/config.php';
                 </div>
 
                 <div class="col-lg-4">
-                    <section class="camera-card" aria-labelledby="controls-title">
+                    <section class="camera-card camera-workspace" aria-labelledby="controls-title">
                         <div class="card-header">
-                            <h2 id="controls-title">Camera Controls</h2>
+                            <h2 id="controls-title">Camera Workspace</h2>
                         </div>
                         <div class="card-body">
-                            <div class="controls">
-                                <button class="btn btn-primary" id="captureBtn" type="button">
-                                    <i class="bi bi-camera"></i>
-                                    Capture Image
-                                </button>
-                                <button class="btn btn-outline-primary" id="liveViewBtn" type="button">
-                                    <i class="bi bi-play-circle"></i>
-                                    Start Live View
-                                </button>
-                                <button class="btn btn-secondary" type="button" disabled>
-                                    <i class="bi bi-magic"></i>
-                                    Coming Soon
-                                </button>
-                                <button class="btn btn-outline-danger" type="button" disabled>
-                                    <i class="bi bi-trash"></i>
-                                    Clear Preview
-                                </button>
+                            <div class="workspace-section">
+                                <div class="workspace-section-title">Camera Status</div>
+                                <div class="status-badge status-paused" id="workspaceStatus">Paused</div>
                             </div>
-                            <p class="text-muted mt-3 mb-0 small">Controls are disabled in Sprint 1.</p>
+
+                            <div class="workspace-section">
+                                <div class="workspace-section-title">Last Capture</div>
+                                <div class="workspace-meta">
+                                    <div class="workspace-meta-item">
+                                        <span class="workspace-meta-label">Date</span>
+                                        <span class="workspace-meta-value">Today</span>
+                                    </div>
+                                    <div class="workspace-meta-item">
+                                        <span class="workspace-meta-label">Time</span>
+                                        <span class="workspace-meta-value">10:35 AM</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="workspace-section">
+                                <div class="workspace-section-title">Quick Actions</div>
+                                <div class="controls">
+                                    <button class="btn btn-primary" id="captureBtn" type="button">
+                                        <i class="bi bi-camera"></i>
+                                        Capture Image
+                                    </button>
+                                    <button class="btn btn-outline-primary" id="liveViewBtn" type="button">
+                                        <i class="bi bi-play-circle"></i>
+                                        Start Live View
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="workspace-section workspace-info-section">
+                                <div class="workspace-info">
+                                    <div class="workspace-info-item">
+                                        <i class="bi bi-info-circle"></i>
+                                        <span>Every successful capture is automatically analyzed by AI.</span>
+                                    </div>
+                                    <div class="workspace-info-item">
+                                        <i class="bi bi-info-circle"></i>
+                                        <span>Live View pauses automatically after inactivity to improve performance.</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </section>
                 </div>
             </div>
 
-            <div class="row g-4">
-                <div class="col-lg-6">
-                    <section class="camera-card" aria-labelledby="latest-capture-title">
+            <div class="row g-4 align-items-stretch">
+                <div class="col-lg-6 d-flex">
+                    <section class="camera-card latest-capture-card w-100" aria-labelledby="latest-capture-title">
                         <div class="card-header">
                             <h2 id="latest-capture-title">Latest Capture</h2>
                         </div>
                         <div class="card-body">
                             <div class="capture-preview">
-                            <img
-                                id="latestCapture"
-                                src="images/placeholder-capture.png"
-                                alt="Latest Capture">                            
+                                <img
+                                    id="latestCapture"
+                                    src="images/placeholder-capture.png"
+                                    alt="Latest Capture">
                             </div>
-                            <p class="capture-placeholder mt-2" id="captureStatus">No image captured yet.</p>
+                            <div class="capture-details">
+                                <div class="capture-meta-single">
+                                    <span class="capture-meta-label">📅 Captured</span>
+                                    <span
+                                        class="capture-meta-value"
+                                        id="captureTimestamp">
+                                        No capture yet
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="capture-actions">
+                                <button class="btn btn-outline-primary btn-sm" type="button">View Full Image</button>
+                                <button class="btn btn-outline-secondary btn-sm" type="button">Download Image</button>
+                                <a href="#" class="capture-gallery-link">View Gallery →</a>
+                            </div>
+                            <div class="recent-captures">
+                                <div class="recent-captures-title">Recent Captures</div>
+                                <p class="capture-placeholder" id="captureStatus">No previous captures yet.</p>
+                            </div>
                         </div>
                     </section>
                 </div>
 
-                <div class="col-lg-6">
-                    <section class="camera-card" aria-labelledby="analysis-results-title">
+                <div class="col-lg-6 d-flex">
+                    <section class="camera-card analysis-card w-100" aria-labelledby="analysis-title">
                         <div class="card-header">
-                            <h2 id="analysis-results-title">Analysis Results</h2>
+                            <h2 id="analysis-title">🐶 Let's See What Your Pet Is Doing!</h2>
+                             <p class="analysis-subtitle">AI observations from your latest capture.</p>
                         </div>
                         <div class="card-body">
-                            <div class="analysis-grid">
-                                <div class="analysis-item">
-                                    <div class="label">Food Level</div>
-                                    <div class="value placeholder">--</div>
+                            <div class="analysis-state analysis-empty">
+                                <div class="empty-illustration">
+                                    <i class="bi bi-paw"></i>
                                 </div>
-                                <div class="analysis-item">
-                                    <div class="label">Water Level</div>
-                                    <div class="value placeholder">--</div>
+                                <h3 class="empty-title">No analysis yet</h3>
+                                <p class="empty-text">Capture an image and I'll share what I notice about your pet's behavior and feeding setup.</p>
+                            </div>
+
+                            <div class="analysis-state analysis-loading d-none">
+                                <div class="loading-icon">
+                                    <i class="bi bi-robot"></i>
                                 </div>
-                                <div class="analysis-item">
-                                    <div class="label">Pet Visible</div>
-                                    <div class="value placeholder">--</div>
+                                <div class="spinner-border text-primary loading-spinner" role="status">
+                                    <span class="visually-hidden">Loading...</span>
                                 </div>
-                                <div class="analysis-item">
-                                    <div class="label">Cleanliness</div>
-                                    <div class="value placeholder">--</div>
-                                </div>
-                                <div class="analysis-item full-width">
-                                    <div class="label">Overall Status</div>
-                                    <div class="value placeholder">Waiting for analysis...</div>
+                                <h3 class="loading-title">Analyzing your pet...</h3>
+                                <p class="loading-subtitle">I'm observing posture, attention, and body language from this capture.</p>
+                                <div class="loading-chips">
+                                    <span class="chip chip-active">Reading posture...</span>
+                                    <span class="chip">Checking attention...</span>
+                                    <span class="chip">Writing observations...</span>
                                 </div>
                             </div>
+
+                             <div class="analysis-state analysis-results d-none">
+                                 <div class="analysis-overall">
+                                     <div class="result-section result-section-overall">
+                                         <h4 class="result-section-title">✨ Overall Observation <span class="ai-badge">AI</span></h4>
+                                         <div class="result-summary overall-container" id="analysisSummary">Loading...</div>
+                                     </div>
+                                 </div>
+                                 <div class="analysis-scroll-area">
+                                     <div class="result-section">
+                                         <h4 class="result-section-title">👀 What We Noticed</h4>
+                                         <div class="observations-list">
+                                             <div class="observation-row">
+                                                 <div class="observation-label">Estimated Mood</div>
+                                                 <div class="result-value placeholder" id="analysisMood">—</div>
+                                             </div>
+                                             <div class="observation-row">
+                                                 <div class="observation-label">Body Posture</div>
+                                                 <div class="result-value placeholder" id="analysisPosture">—</div>
+                                             </div>
+                                             <div class="observation-row">
+                                                 <div class="observation-label">Head Position</div>
+                                                 <div class="result-value placeholder" id="analysisHead">—</div>
+                                             </div>
+                                             <div class="observation-row">
+                                                 <div class="observation-label">Tail Position</div>
+                                                 <div class="result-value placeholder" id="analysisTail">—</div>
+                                             </div>
+                                             <div class="observation-row">
+                                                 <div class="observation-label">Ears</div>
+                                                 <div class="result-value placeholder" id="analysisEars">—</div>
+                                             </div>
+                                             <div class="observation-row">
+                                                 <div class="observation-label">Mouth</div>
+                                                 <div class="result-value placeholder" id="analysisMouth">—</div>
+                                             </div>
+                                             <div class="observation-row">
+                                                 <div class="observation-label">Attention</div>
+                                                 <div class="result-value placeholder" id="analysisAttention">—</div>
+                                             </div>
+                                             <div class="observation-row">
+                                                 <div class="observation-label">Feeding Readiness</div>
+                                                 <div class="result-value placeholder" id="analysisFeeding">—</div>
+                                             </div>
+                                             <div class="observation-row">
+                                                 <div class="observation-label">Confidence</div>
+                                                 <div class="result-value placeholder" id="analysisConfidence">—</div>
+                                             </div>
+                                         </div>
+                                     </div>
+
+                                     <div class="result-section">
+                                         <h4 class="result-section-title">👁 Visible Objects</h4>
+                                         <div id="analysisObjects"></div>
+                                     </div>
+
+                                     <div class="result-section">
+                                         <h4 class="result-section-title">🏠 Environment</h4>
+                                         <div id="analysisEnvironment"></div>
+                                     </div>
+
+                                     <div class="result-section">
+                                         <h4 class="result-section-title">📝 AI Notes</h4>
+                                         <div id="analysisNotes"></div>
+                                     </div>
+
+                                     <div class="result-section">
+                                         <h4 class="result-section-title">💡 Recommendations</h4>
+                                         <div id="analysisRecommendations"></div>
+                                     </div>
+                                  </div>
+                             </div>
                         </div>
                     </section>
                 </div>
