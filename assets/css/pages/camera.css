@@ -1,12 +1,16 @@
-:root {
-    --brand: #1769d1;
-    --soft-blue: #eaf3ff;
-    --bg: #f6f8fb;
-    --text: #27364a;
-    --muted: #657387;
-    --border: #e6ebf1;
-    --card-shadow: 0 2px 6px rgba(31, 50, 75, .04);
-    --radius: .75rem;
+:root{
+    --brand: var(--camera-primary);
+    --soft-blue: var(--bg-ai);
+
+    --bg: var(--bg-app);
+    --text: var(--text-primary);
+    --muted: var(--text-secondary);
+
+    --border: var(--border-primary);
+
+    --card-shadow: var(--shadow-sm);
+
+    --radius: 12px;
 }
 
 * {
@@ -19,6 +23,123 @@ body {
     font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
     font-size: .92rem;
     margin: 0;
+}
+
+/* =====================================================
+   BUTTON SYSTEM
+   ===================================================== */
+
+.btn{
+    border-radius:12px;
+    font-weight:600;
+    transition:all .25s ease;
+}
+
+/* Primary */
+
+.btn-primary{
+    --bs-btn-bg: #F26AA3;
+    --bs-btn-border-color: #F26AA3;
+
+    --bs-btn-hover-bg: #E05290;
+    --bs-btn-hover-border-color: #E05290;
+
+    --bs-btn-active-bg: #D95693;
+    --bs-btn-active-border-color: #D95693;
+
+    --bs-btn-disabled-bg: #F26AA3;
+    --bs-btn-disabled-border-color: #F26AA3;
+
+    --bs-btn-focus-shadow-rgb: 242,106,163;
+
+    background: linear-gradient(
+        135deg,
+        #F47AAD,
+        #EC6BA5 45%,
+        #DB5F98
+    );
+
+    border:none;
+}
+
+.btn-primary:hover{
+
+    background:linear-gradient(
+        135deg,
+        #E9649E,
+        #D95693
+    );
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 12px 30px rgba(242,106,163,.28);
+
+}
+
+.btn-primary:active{
+
+    transform:translateY(0) scale(.97);
+
+}
+
+.btn-primary:focus{
+
+    box-shadow:
+        0 0 0 4px rgba(242,106,163,.18);
+
+}
+
+.btn-outline-primary{
+
+    --bs-btn-color: var(--camera-primary);
+    --bs-btn-border-color: var(--border-hover);
+
+    --bs-btn-hover-color:#fff;
+    --bs-btn-hover-bg:var(--camera-primary);
+    --bs-btn-hover-border-color:var(--camera-primary);
+
+    --bs-btn-active-color:#fff;
+    --bs-btn-active-bg:var(--color-primary-hover);
+    --bs-btn-active-border-color:var(--color-primary-hover);
+
+    --bs-btn-focus-shadow-rgb:242,106,163;
+
+}
+
+.btn-outline-primary:hover{
+
+    background:var(--bg-alt);
+
+    color:var(--camera-primary);
+
+    border-color:var(--camera-primary);
+
+}
+
+.btn-outline-secondary{
+
+    --bs-btn-color:var(--text-secondary);
+    --bs-btn-border-color:var(--border);
+
+    --bs-btn-hover-color:var(--camera-primary);
+    --bs-btn-hover-bg:var(--bg-alt);
+    --bs-btn-hover-border-color:var(--border-hover);
+
+    --bs-btn-active-color:var(--camera-primary);
+    --bs-btn-active-bg:var(--bg-alt);
+    --bs-btn-active-border-color:var(--camera-primary);
+
+    --bs-btn-focus-shadow-rgb:242,106,163;
+
+}
+
+.btn-outline-secondary:hover{
+
+    background:var(--bg-secondary);
+
+    border-color:var(--border-hover);
+
 }
 
 .camera-page {
@@ -49,7 +170,7 @@ body {
 }
 
 .camera-card {
-    background: #fff;
+    background:var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     box-shadow: var(--card-shadow);
@@ -60,6 +181,7 @@ body {
 .camera-card .card-header {
     padding: 1rem 1.25rem;
     border-bottom: 1px solid var(--border);
+    background:var(--bg-secondary);
 }
 
 .camera-card .card-header h2 {
@@ -76,7 +198,7 @@ body {
     position: relative;
     width: 100%;
     height: 340px;
-    background: #eef1f5;
+    background: var(--bg-alt);
     border-radius: .5rem;
     overflow: hidden;
     display: flex;
@@ -97,7 +219,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: .75rem;
-    color: #8a96a5;
+    color: var(--text-muted);
     text-align: center;
     padding: 1.5rem;
 }
@@ -118,8 +240,8 @@ body {
     gap: .4rem;
     margin-top: .6rem;
     padding: .35rem .75rem;
-    background: #e7f7ef;
-    color: #18864b;
+    background:var(--success);
+    color: #fff;
     border-radius: 999px;
     font-size: .78rem;
     font-weight: 600;
@@ -134,30 +256,30 @@ body {
 }
 
 .status-badge.status-capturing {
-    background: #fff8e1;
-    color: #b7791f;
+    background:var(--color-cream);
+    color:var(--warning);
 }
 
 .status-badge.status-capturing::before {
-    background: #b7791f;
+    background:var(--warning);
 }
 
 .status-badge.status-error {
-    background: #feebee;
-    color: #c93345;
+    background:#FDECEC;
+    color:var(--danger);
 }
 
 .status-badge.status-error::before {
-    background: #c93345;
+    background:var(--danger);
 }
 
 .status-badge.status-paused {
-    background: #f1f5f9;
-    color: #475569;
+    background:var(--bg-alt);
+    color:var(--text-secondary);
 }
 
 .status-badge.status-paused::before {
-    background: #94a3b8;
+    background:var(--offline);
 }
 
 .controls .btn:disabled {
@@ -264,7 +386,7 @@ body {
 .capture-preview {
     width: 100%;
     aspect-ratio: 16 / 9;
-    background: #eef1f5;
+    background:var(--bg-alt);
     border-radius: .5rem;
     overflow: hidden;
     display: flex;
@@ -363,7 +485,7 @@ body {
 
 .analysis-item {
     padding: .85rem 1rem;
-    background: #f8fafc;
+    background:var(--bg-secondary);
     border-radius: .5rem;
     border: 1px solid var(--border);
 }
@@ -405,13 +527,13 @@ body {
 
 .dev-card p {
     margin: 0 0 .5rem;
-    color: #405067;
+    color:var(--text-secondary);
 }
 
 .dev-card ul {
     margin: .5rem 0 0;
     padding-left: 1.25rem;
-    color: #405067;
+    color:var(--text-secondary);
 }
 
 .dev-card li {
@@ -450,7 +572,8 @@ body {
 .capture-modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(15, 23, 42, 0.65);
+    box-shadow:
+        0 20px 55px rgba(242,106,163,.18);
     backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
@@ -528,11 +651,11 @@ body {
 }
 
 .capture-modal-success-icon {
-    color: #18864b;
+    color:var(--success);
 }
 
 .capture-modal-error-icon {
-    color: #c93345;
+    color: var(--danger);
 }
 
 .hidden-icon {
@@ -682,9 +805,9 @@ body {
     margin:.3rem .35rem .3rem 0;
     padding:.45rem .75rem;
     border-radius:999px;
-    background:#eef6ff;
-    border:1px solid #d6e8ff;
-    color:#36506d;
+    background: var(--bg-ai);
+    border:1px solid var(--ai-border);
+    color:var(--color-secondary);
     font-size:.82rem;
     font-weight:500;
 
@@ -771,7 +894,7 @@ body {
     align-items: center;
     gap: .35rem;
     padding: .3rem .6rem;
-    background: #f1f5f9;
+    background:var(--bg-alt);
     border-radius: 999px;
     font-size: .72rem;
     font-weight: 500;
@@ -781,9 +904,9 @@ body {
 }
 
 .chip.chip-active {
-    background: var(--soft-blue);
-    color: var(--brand);
-    border-color: #b8d4f7;
+    background:var(--bg-ai);
+    border-color:var(--ai-border);
+    color:var(--brand);
     animation: chipPulse 1.5s ease-in-out infinite;
 }
 
@@ -820,7 +943,7 @@ body {
 
 .result-summary {
     padding: 1.1rem 1.25rem;
-    background: #f8fafc;
+    background:var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     color: var(--muted);
@@ -875,12 +998,12 @@ body {
 }
 
 .analysis-scroll-area::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: var(--border-primary);
     border-radius: 3px;
 }
 
 .analysis-scroll-area::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+    background: var(--text-muted);
 }
 
 .result-section-overall {
@@ -892,8 +1015,8 @@ body {
 }
 
 .result-section{
-    background:#fbfcfe;
-    border:1px solid #edf2f7;
+    background:var(--bg-secondary);
+    border:1px solid var(--border-primary);
     border-radius:12px;
     padding:1rem;
 
@@ -905,9 +1028,9 @@ body {
 
 .overall-container {
     padding: 1rem 1.25rem;
-    background: #ecfdf3;
-    border: 1px solid #b7ebc9;
-    border-left: 4px solid #16a34a;
+    background:var(--bg-ai);
+    border:1px solid var(--ai-border);
+    border-left:4px solid var(--camera-primary);
     border-radius: var(--radius);
     color: var(--text);
     font-size: .95rem;
@@ -957,7 +1080,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: .8rem 1rem;
-    background: #f8fafc;
+    background:var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: 10px;
     gap: 1rem;
@@ -977,8 +1100,8 @@ body {
 
 .ai-notes-placeholder, 
 .recommendations-placeholder {
-    background:#eef6ff;
-    border-left:4px solid var(--brand);
+    background:var(--bg-ai);
+    border-left:4px solid var(--ai-primary);
     border-radius:10px;
     padding:1rem;
     color:#4b5563;

@@ -140,24 +140,35 @@ function setStatus(status) {
         setTimeout(function () { alert.remove(); }, 3000);
     }
 
-    function handleCaptureSuccess(data) {
-        const latestCapture = refs.latestCapture;
-        const captureStatus = refs.captureStatus;
-        const captureTimestamp = refs.captureTimestamp;
+function handleCaptureSuccess(data) {
 
-        if (latestCapture) {
-            latestCapture.src = data.image + '?t=' + Date.now();
-        }
-        if (captureTimestamp) {
-            captureTimestamp.textContent = data.timestamp;
-        }
-        if (captureStatus) {
-            captureStatus.textContent = 'Latest capture saved.';
-        }
-        showAlert(data.message, 'success');
-        restoreButton();
-        startAnalysis();
+    const latestCapture = refs.latestCapture;
+    const captureStatus = refs.captureStatus;
+    const captureTimestamp = refs.captureTimestamp;
+
+    if (latestCapture) {
+        latestCapture.src = data.image + '?t=' + Date.now();
     }
+
+    if (captureTimestamp) {
+        captureTimestamp.textContent = data.timestamp;
+    }
+
+    // Update the "Last Capture" card
+    updateWorkspaceCaptureTime(
+        data.capture_date,
+        data.capture_time
+    );
+
+    if (captureStatus) {
+        captureStatus.textContent = 'Latest capture saved.';
+    }
+
+    showAlert(data.message, 'success');
+    restoreButton();
+    startAnalysis();
+
+}
 
     function fadeOutElement(el) {
         if (!el) return;
@@ -701,3 +712,18 @@ function showAnalysisResults(analysis) {
         init();
     }
 })();
+
+function updateWorkspaceCaptureTime(captureDate, captureTime) {
+
+    const dateEl = document.getElementById("workspaceCaptureDate");
+    const timeEl = document.getElementById("workspaceCaptureTime");
+
+    if (dateEl) {
+        dateEl.textContent = captureDate;
+    }
+
+    if (timeEl) {
+        timeEl.textContent = captureTime;
+    }
+
+}

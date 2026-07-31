@@ -93,6 +93,7 @@ if (!file_put_contents($filepath, $image)) {
 
 }
 
+
 /**
  * Update latest.jpg
  */
@@ -114,6 +115,8 @@ jsonResponse(
     [
         'filename'  => $filename,
         'image'     => 'uploads/latest.jpg?' . time(),
-        'timestamp' => date('Y-m-d H:i:s')
+        'capture_date' => date('F j, Y'),
+        'capture_time' => date('g:i A'),
+        'timestamp'    => date('Y-m-d H:i:s')
     ]
 );

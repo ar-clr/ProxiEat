@@ -1,29 +1,32 @@
 {
-    "summary": "A close-up, blurry shot shows a pug with a slice of pepperoni pizza in front of or inside its mouth.",
+    "summary": "A close-up image of a cat looking towards the camera indoors near a window with curtains.",
     "behavior": {
-        "estimated_mood": "Interested",
+        "estimated_mood": "Curious",
         "body_posture": "Unable to determine",
-        "head_position": "Looking downward",
-        "tail_position": "Unable to determine",
-        "ears": "Unable to determine",
-        "mouth": "Open around food",
-        "attention": "Looking at food",
-        "feeding_readiness": "Currently eating"
+        "head_position": "Looking toward camera",
+        "tail_position": "Not visible",
+        "ears": "Ears visible and upright",
+        "mouth": "Closed",
+        "attention": "Looking at camera",
+        "feeding_readiness": "Unable to determine"
     },
     "visible_objects": [
-        "Pizza"
+        "Curtain",
+        "Window"
     ],
     "environment": [
-        "Bright lighting"
+        "Indoor",
+        "Bright lighting near window"
     ],
     "ai_notes": [
-        "Image is extremely blurry and out of focus.",
-        "Pet is partially outside the frame.",
-        "Tail and body are not visible."
+        "Image is low resolution and motion-blurry.",
+        "Pet is extremely close to the camera lens.",
+        "Body, limbs, and tail are not visible.",
+        "Feeder and bowls are outside camera view."
     ],
     "recommendations": [
-        "Continue monitoring.",
-        "Adjust camera position or lens focus for better visibility."
+        "Adjust camera positioning to capture a wider view of the feeding area.",
+        "Continue monitoring."
     ],
-    "confidence": 0.55
+    "confidence": 0.65
 }

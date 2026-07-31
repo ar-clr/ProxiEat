@@ -9,23 +9,23 @@
 :root {
 
     /* Primary Colors */
-    --proxie-primary: #1F9D8B;
-    --proxie-primary-hover: #187D70;
-    --proxie-secondary: #16697A;
-    --proxie-accent: #0B4F6C;
+    --proxie-primary: #F26AA3;
+    --proxie-primary-hover: #E05290;
+    --proxie-secondary: #DB6AA7;
+    --proxie-accent: #C94F8F;
 
     /* Background */
-    --proxie-bg: #F4F8F9;
+    --proxie-bg: #FFF5F9;
     --proxie-bg-chat: #FFFFFF;
 
     /* Text */
-    --proxie-text-primary: #17353D;
-    --proxie-text-secondary: #607D86;
-    --proxie-text-muted: #8EA6AD;
+    --proxie-text-primary: #363244;
+    --proxie-text-secondary: #6B6778;
+    --proxie-text-muted: #A29BAC;
 
     /* Borders */
-    --proxie-border: #D8E5E8;
-    --proxie-border-light: #EEF5F6;
+    --proxie-border: #F4D5E4;
+    --proxie-border-light: #FAEDF3;
 
     /* Radius */
     --proxie-radius-sm: 8px;
@@ -72,6 +72,7 @@ body {
 /* ============================================
    FLOATING TOGGLE BUTTON
    ============================================ */
+   
 .chatbot__toggle {
     width: 56px;
     height: 56px;
@@ -94,7 +95,7 @@ body {
     font-weight: 600;
     letter-spacing: 0.01em;
     cursor: pointer;
-    box-shadow: 0 6px 24px rgba(31, 157, 139, 0.35);
+    box-shadow: 0 8px 26px rgba(242, 106, 163, .32);
     animation: proxie-float 4s ease-in-out infinite, proxie-pulse-soft 3s ease-in-out infinite;
     transition:
         width 600ms cubic-bezier(0.19, 1, 0.22, 1),
@@ -107,7 +108,7 @@ body {
     width:180px;
     animation-play-state: paused;
     transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 12px 32px rgba(31, 157, 139, 0.45);
+    box-shadow: 0 14px 36px rgba(242,106,163,.42);
     background: linear-gradient(135deg, var(--proxie-primary-hover) 0%, var(--proxie-primary) 100%);
 }
 
@@ -128,7 +129,7 @@ body {
 }
 
 .chatbot__toggle:focus-visible {
-    outline: 3px solid rgba(31, 157, 139, 0.4);
+    outline: 3px solid rgba(242,106,163,.35);
     outline-offset: 3px;
 }
 
@@ -184,11 +185,11 @@ body {
     max-height: calc(100vh - 64px);
     background: var(--proxie-bg-chat);
     border-radius: var(--proxie-radius-xl);
-    border:1px solid rgba(0,0,0,.24);
+    border:1px solid var(--proxie-border);
     box-shadow:
-        0 18px 36px rgba(0,0,0,.22),
-        0 40px 90px rgba(0,0,0,.30),
-        0 0 25px rgba(0,168,204,.08);
+        0 12px 30px rgba(242,106,163,.12),
+        0 24px 60px rgba(242,106,163,.16),
+        0 0 0 1px rgba(255,255,255,.7);
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
@@ -232,7 +233,12 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 16px 28px;
-    background: linear-gradient(135deg, var(--proxie-primary) 0%, var(--proxie-secondary) 60%, var(--proxie-accent) 100%);
+    background: linear-gradient(
+        135deg,
+        #F47AAD 0%,
+        #E8649F 55%,
+        #D95693 100%
+    );
     color: #FFFFFF;
     flex-shrink: 0;
 }
@@ -249,7 +255,9 @@ body {
     justify-content: center;
     width: 40px;
     height: 40px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255,255,255,.22);
+    border:1px solid rgba(255,255,255,.18);
+    backdrop-filter: blur(10px);
     border-radius: var(--proxie-radius-md);
 }
 
@@ -376,7 +384,9 @@ body {
 }
 
 .message--user .message__avatar {
-    background: var(--proxie-text-primary);
+    background: #FFE5EF;
+    color: var(--proxie-primary);
+    border: 1px solid var(--proxie-border);
 }
 
 .message__body {
@@ -581,12 +591,13 @@ body {
 
 /* Subtle pulse for attention */
 @keyframes proxie-pulse-soft {
-    0%, 100% {
-    box-shadow: 0 6px 24px rgba(31, 157, 139, 0.35);
+    0%,100%{
+    box-shadow:0 8px 26px rgba(242,106,163,.30);
     }
-     50% {
-         box-shadow: 0 6px 32px rgba(31, 157, 139, 0.55);
-     }
+
+    50%{
+        box-shadow:0 8px 34px rgba(242,106,163,.48);
+    }
 }
 
 /* Typing indicator container */
@@ -690,9 +701,14 @@ body {
     display: block;
     width: 130px;
     height: fit-content;
-    margin: 0 auto 0px;
+    margin: 0 auto;
+    padding-bottom: 12px;
     object-fit: contain;
     animation: proxie-empty-float 5s ease-in-out infinite;
+
+    filter:
+        drop-shadow(0 0 18px rgba(242, 106, 163, 0.28))
+        drop-shadow(0 0 38px rgba(242, 106, 163, 0.18));
 }
 
 @keyframes proxie-empty-float {
@@ -905,7 +921,7 @@ body {
 .chatbot__input:focus {
     outline: none;
     border-color: var(--proxie-primary);
-    box-shadow: 0 0 0 4px rgba(31, 157, 139, 0.1);
+    box-shadow: 0 0 0 4px rgba(242, 106, 163, 0.15);
     background: var(--proxie-bg-chat);
 }
 
@@ -934,12 +950,12 @@ body {
     color: #FFFFFF;
     cursor: pointer;
     transition: all var(--proxie-transition-normal);
-    box-shadow: 0 2px 8px rgba(31, 157, 139, 0.2);
+    box-shadow: 0 4px 12px rgba(242, 106, 163, 0.22);
 }
 
 .chatbot__send:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(31, 157, 139, 0.35);
+    box-shadow: 0 8px 22px rgba(242, 106, 163, 0.35);
     background: linear-gradient(135deg, var(--proxie-primary-hover) 0%, var(--proxie-primary) 100%);
 }
 
@@ -949,7 +965,7 @@ body {
 }
 
 .chatbot__send:focus-visible {
-    outline: 3px solid rgba(31, 157, 139, 0.4);
+    outline: 3px solid rgba(242, 106, 163, 0.35);
     outline-offset: 2px;
 }
 

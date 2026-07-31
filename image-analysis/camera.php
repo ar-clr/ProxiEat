@@ -11,6 +11,10 @@ require_once __DIR__ . '/config/config.php';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="..\assets\css\pages\camera.css?v=<?= time() ?>" rel="stylesheet">
+    <link href="..\assets\css\core\variables.css?v=<?= time() ?>" rel="stylesheet">
+
+     <link rel="stylesheet" href="../assets/css/components/chatbot/chatbot.css?v=<?= time() ?>">
+
 </head>
 <body>
     <div class="camera-page">
@@ -64,11 +68,15 @@ require_once __DIR__ . '/config/config.php';
                                 <div class="workspace-meta">
                                     <div class="workspace-meta-item">
                                         <span class="workspace-meta-label">Date</span>
-                                        <span class="workspace-meta-value">Today</span>
+                                        <span class="workspace-meta-value" id="workspaceCaptureDate">
+                                            —
+                                        </span>
                                     </div>
                                     <div class="workspace-meta-item">
                                         <span class="workspace-meta-label">Time</span>
-                                        <span class="workspace-meta-value">10:35 AM</span>
+                                        <span class="workspace-meta-value" id="workspaceCaptureTime">
+                                            —
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -299,7 +307,20 @@ require_once __DIR__ . '/config/config.php';
         </div>
     </div>
 
+    <?php include __DIR__ . '/../chatbot/chatbot.php'; ?>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="..\assets\js\camera\camera.js?v=<?= time() ?>"></script>
+
+    <script src="..\assets\vendor\marked\markdown.js?v=<?= time() ?>"></script>
+    <!-- <script src="assets/js/vendor/purify.min.js"></script> -->
+     
+    <script src="../assets/js/chatbot/chatbot-ui.js?v=<?= time() ?>"></script>
+    <script src="../assets/js/chatbot/chatbot-renderer.js?v=<?= time() ?>"></script>
+    <script src="../assets/js/chatbot/chatbot-typing.js?v=<?= time() ?>"></script>
+    <script src="../assets/js/chatbot/chatbot-api.js?v=<?= time() ?>"></script>
+    <script src="../assets/js/chatbot/chatbot-controller.js?v=<?= time() ?>"></script>
+    <script src="../assets/js/chatbot/chatbot.js?v=<?= time() ?>"></script>
 </body>
+    
 </html>

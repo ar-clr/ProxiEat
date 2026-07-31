@@ -1,0 +1,149 @@
+/* ==========================================================
+   ProxiEat Design System
+   Consult A Vet Theme
+   ========================================================== */
+
+:root {
+
+    /* ======================================================
+       Brand Colors
+       ====================================================== */
+
+    --color-primary: #F26AA3;
+    --color-primary-hover: #E05290;
+    --color-secondary: #D95C98;
+    --color-accent: #C54F87;
+
+    /* ======================================================
+       Accent Colors
+       ====================================================== */
+
+    --color-coral: #FF9EBF;
+    --color-peach: #FFE4EC;
+    --color-mint: #8ED9B8;
+    --color-sky: #B9D9FF;
+    --color-baby-blue: #EDF6FF;
+    --color-honey: #FFD56A;
+    --color-cream: #FFF7E5;
+    --color-lavender: #F3EEFF;
+    --color-blush: #FFF0F6;
+
+    /* ======================================================
+       Backgrounds
+       ====================================================== */
+
+    --bg-app: #FFF7FA;
+    --bg-secondary: #FFF9FC;
+    --bg-surface: #FFFFFF;
+    --bg-alt: #FFF2F7;
+    --bg-ai: #FFF4F8;
+    --bg-pet: #FFF8FB;
+
+    /* ======================================================
+       Typography
+       ====================================================== */
+
+    --text-primary: #333344;
+    --text-secondary: #66667A;
+    --text-muted: #9494A6;
+    --text-disabled: #BEBECC;
+    --text-white: #FFFFFF;
+
+    /* ======================================================
+       Borders
+       ====================================================== */
+
+    --border-primary: #F6D5E2;
+    --border-secondary: #FCEAF2;
+    --border-hover: #F3A7C5;
+
+    /* ======================================================
+       Focus & Shadows
+       ====================================================== */
+
+    --focus-ring: rgba(242,106,163,.18);
+
+    --shadow-xs: 0 1px 2px rgba(242,106,163,.05);
+    --shadow-sm: 0 4px 12px rgba(242,106,163,.08);
+    --shadow-md: 0 8px 24px rgba(242,106,163,.10);
+    --shadow-lg: 0 18px 42px rgba(242,106,163,.14);
+
+    /* ======================================================
+       Status Colors
+       ====================================================== */
+
+    --success: #5DCB8A;
+    --online: #46B96F;
+    --warning: #FFC857;
+    --danger: #F0677D;
+    --offline: #B8B8C4;
+    --processing: #A9D7FF;
+
+    /* ======================================================
+       AI / Chatbot
+       ====================================================== */
+
+    --ai-primary: var(--color-primary);
+    --ai-secondary: var(--color-secondary);
+    --ai-highlight: #FFD6E7;
+    --ai-background: #FFF5F9;
+    --ai-border: #F8D7E6;
+    --ai-success: var(--success);
+
+    /* ======================================================
+       Module Identity
+       ====================================================== */
+
+    --dashboard-primary: var(--color-primary);
+
+    --pet-primary: #FF8FB5;
+    --pet-secondary: #FFE3EC;
+
+    --camera-primary: #F26AA3;
+    --camera-secondary: #FFD6E7;
+
+    --analysis-primary: #F8A8C8;
+    --analysis-secondary: #FFF2F7;
+
+    --feeder-primary: #8ED9B8;
+    --feeder-secondary: #FFF1B8;
+
+    --boarding-primary: #F58AB4;
+    --boarding-secondary: #FFE8F1;
+
+    --analytics-primary: #A9D7FF;
+    --analytics-secondary: #D95C98;
+
+    --notification-primary: #FFD56A;
+    --notification-secondary: #FF9EBF;
+
+    --chatbot-primary: var(--color-primary);
+    --chatbot-secondary: var(--color-secondary);
+
+    /* Radius */
+
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --radius-xl: 24px;
+    --radius-pill: 999px;
+
+    /* Spacing */
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-10: 40px;
+
+    /* Transition */
+
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 400ms ease;
+
+}
