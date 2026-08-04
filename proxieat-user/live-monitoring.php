@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/../image-analysis/config/config.php';
 ?>
 
 <!DOCTYPE html>
@@ -10,13 +10,16 @@ require_once __DIR__ . '/config/config.php';
     <title>Image Analysis - ProxiEat</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="..\assets\css\pages\camera.css?v=<?= time() ?>" rel="stylesheet">
-    <link href="..\assets\css\core\variables.css?v=<?= time() ?>" rel="stylesheet">
+    <link href="../assets/css/core/variables.css?v=<?= time() ?>" rel="stylesheet">
+    <link href="../assets/css/layout/sidebar.css?v=<?= time() ?>" rel="stylesheet">
+    <link href="../assets/css/pages/camera.css?v=<?= time() ?>" rel="stylesheet">
 
-     <link rel="stylesheet" href="../assets/css/components/chatbot/chatbot.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../assets/css/components/chatbot/chatbot.css?v=<?= time() ?>">
 
 </head>
 <body>
+    <?php include 'includes/sidebar.php'; ?>
+
     <div class="camera-page">
         <header class="page-header">
             <h1>Image Analysis</h1>
@@ -24,9 +27,9 @@ require_once __DIR__ . '/config/config.php';
         </header>
 
         <div class="camera-container">
-            <div class="row g-3">
-                <div class="col-lg-8">
-                    <section class="camera-card" aria-labelledby="live-feed-title">
+            <div class="row g-3 align-items-stretch">
+                <div class="col-lg-8 d-flex">
+                    <section class="camera-card w-100" aria-labelledby="live-feed-title">
                         <div class="card-header">
                             <h2 id="live-feed-title">Live Camera Feed</h2>
                         </div>
@@ -52,8 +55,8 @@ require_once __DIR__ . '/config/config.php';
                     </section>
                 </div>
 
-                <div class="col-lg-4">
-                    <section class="camera-card camera-workspace" aria-labelledby="controls-title">
+                <div class="col-lg-4 d-flex">
+                    <section class="camera-card camera-workspace w-100" aria-labelledby="controls-title">
                         <div class="card-header">
                             <h2 id="controls-title">Camera Workspace</h2>
                         </div>
@@ -310,9 +313,9 @@ require_once __DIR__ . '/config/config.php';
     <?php include __DIR__ . '/../chatbot/chatbot.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="..\assets\js\camera\camera.js?v=<?= time() ?>"></script>
+    <script src="../assets/js/camera/camera.js?v=<?= time() ?>"></script>
 
-    <script src="..\assets\vendor\marked\markdown.js?v=<?= time() ?>"></script>
+    <script src="../assets/vendor/marked/markdown.js?v=<?= time() ?>"></script>
     <!-- <script src="assets/js/vendor/purify.min.js"></script> -->
      
     <script src="../assets/js/chatbot/chatbot-ui.js?v=<?= time() ?>"></script>

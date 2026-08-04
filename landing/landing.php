@@ -6,8 +6,8 @@
     <title>ProxiEat - Smarter Feeding. Healthier Pets.</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="..\assets\css\core\variables.css?v=<?= time() ?>" rel="stylesheet">
-    <link href="..\assets\css\pages\landing.css?v=<?= time() ?>" rel="stylesheet">
+    <link href="../assets/css/core/variables.css?v=<?= time() ?>" rel="stylesheet">
+    <link href="../assets/css/pages/landing.css?v=<?= time() ?>" rel="stylesheet">
     <style>
         /* Ripple animation keyframes */
         @keyframes ripple-anim {
@@ -40,10 +40,10 @@
                 </ul>
 
                 <div class="landing-nav__actions">
-                    <a href="image-analysis/camera.php" class="landing-btn landing-btn--secondary landing-btn--sm">
+                    <a href="login.php" class="landing-btn landing-btn--secondary landing-btn--sm">
                         Login
                     </a>
-                    <a href="image-analysis/camera.php" class="landing-btn landing-btn--primary landing-btn--sm">
+                    <a href="register.php" class="landing-btn landing-btn--primary landing-btn--sm">
                         Register
                     </a>
                 </div>
@@ -332,7 +332,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="..\assets\js\landing\landing.js?v=<?= time() ?>"></script>
+    <script src="../assets/js/landing/landing.js?v=<?= time() ?>"></script>
 
     <script>
         // Set dynamic copyright year

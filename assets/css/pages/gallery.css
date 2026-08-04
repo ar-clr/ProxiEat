@@ -127,10 +127,11 @@ body {
    PAGE LAYOUT
    ===================================================== */
 
-.gallery-page {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1.25rem;
+.gallery-page{
+    margin-left:260px;      /* sidebar width */
+    min-height:100vh;
+    padding:32px;
+    background:var(--bg-app);
 }
 
 .page-header {

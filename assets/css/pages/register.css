@@ -1,0 +1,442 @@
+/* ==========================================================
+   ProxiEat Register Page
+   Reuses login.css design system for identical visual language
+   ========================================================== */
+
+@import url('login.css');
+
+/* ----------------------------------------------------------
+   COMPACT FORM OVERRIDES
+   ---------------------------------------------------------- */
+
+.login-auth {
+    gap: 6px;
+    max-width: 320px;
+}
+
+.login-form {
+    gap: 4px;
+}
+
+.login-form__group {
+    gap: 0px;
+}
+
+/* Helper text */
+
+.login-form__helper {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 1px;
+    font-weight: 500;
+}
+
+/* Required asterisk */
+
+.required-asterisk {
+    color: #dc3545;
+    margin-left: 1px;
+    font-weight: 700;
+}
+
+/* Side-by-side row */
+
+.login-form__row {
+    display: flex;
+    gap: 8px;
+}
+
+.login-form__row .login-form__group {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Terms checkbox */
+
+.login-form__terms {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 1px 0;
+    line-height: 1.4;
+}
+
+.login-form__terms input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    accent-color: var(--color-primary);
+    margin-top: 2px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.login-form__terms label {
+    cursor: pointer;
+    user-select: none;
+}
+
+.login-form__terms a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color var(--transition-fast);
+}
+
+.login-form__terms a:hover {
+    color: var(--color-primary-hover);
+}
+
+/* Date input */
+
+.login-form__input[type="date"] {
+    color-scheme: light;
+}
+
+/* Compact registration inputs */
+
+.login-form__input {
+    height: 33px;
+    padding: 0 9px;
+    font-size: 13px;
+}
+
+/* Phone prefix wrapper */
+
+.login-form__phone-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.login-form__phone-prefix {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    pointer-events: none;
+    border-right: 1px solid var(--border-primary);
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+    z-index: 1;
+}
+
+.login-form__input--phone {
+    padding-left: 54px;
+}
+
+/* Password tooltip */
+
+.login-form__password-wrapper {
+    position: relative;
+}
+
+.login-form__tooltip {
+    position: absolute;
+    left: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 220px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    padding: 10px 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 150ms ease;
+    z-index: 9999;
+}
+
+.login-form__tooltip.is-visible {
+    opacity: 1;
+}
+
+.login-form__tooltip-arrow {
+    position: absolute;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background: var(--bg-surface);
+    border-left: 1px solid var(--border-primary);
+    border-bottom: 1px solid var(--border-primary);
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.login-form__tooltip-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.login-form__tooltip-item {
+    font-size: 11px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.login-form__tooltip-item::before {
+    content: '○';
+    font-size: 10px;
+    color: var(--text-muted);
+    width: 12px;
+    text-align: center;
+}
+
+.login-form__tooltip-item.is-satisfied {
+    color: var(--text-secondary);
+}
+
+.login-form__tooltip-item.is-satisfied::before {
+    content: '✓';
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+/* Confirm password message */
+
+.login-form__confirm-message {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    font-weight: 600;
+    pointer-events: none;
+    transition: opacity 150ms ease;
+    opacity: 0;
+}
+
+.login-form__confirm-message.is-visible {
+    opacity: 1;
+}
+
+.login-form__confirm-message--match {
+    color: #2d8a56;
+}
+
+.login-form__confirm-message--mismatch {
+    color: #c0293b;
+}
+
+/* ----------------------------------------------------------
+   MODAL
+   ---------------------------------------------------------- */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease;
+    padding: 20px;
+}
+
+.modal-overlay.is-open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal {
+    position: fixed;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+    background: var(--bg-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 520px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    transition: transform 200ms ease;
+}
+
+.modal-overlay.is-open .modal {
+    transform: translate(-50%, -50%);
+}
+
+.modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border-primary);
+}
+
+.modal__header h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+}
+
+.modal__close {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: color 150ms ease, background-color 150ms ease;
+    font-size: 18px;
+}
+
+.modal__close:hover {
+    color: var(--color-primary);
+    background-color: var(--bg-alt);
+}
+
+.modal__body {
+    padding: 18px;
+    overflow-y: auto;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.modal__body h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 6px;
+}
+
+.modal__body p {
+    margin: 0 0 14px;
+}
+
+/* Modal tabs */
+
+.modal__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border-primary);
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.modal__tab {
+    appearance: none;
+    border: none;
+    background: transparent;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
+    white-space: nowrap;
+}
+
+.modal__tab:hover {
+    background-color: var(--bg-alt);
+    color: var(--text-primary);
+}
+
+.modal__tab.is-active {
+    background-color: var(--bg-alt);
+    color: var(--color-primary);
+    box-shadow: inset 0 0 0 1px var(--border-primary);
+}
+
+.modal__tab:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Tab panels */
+
+.modal__tab-panel {
+    display: none;
+    animation: modal-tab-fade-in 150ms ease forwards;
+}
+
+.modal__tab-panel.is-active {
+    display: block;
+}
+
+@keyframes modal-tab-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ----------------------------------------------------------
+   RESPONSIVE
+   ---------------------------------------------------------- */
+
+@media (max-width: 768px) {
+    .login-form__row {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .login-form__tooltip {
+        left: 0;
+        right: 0;
+        top: calc(100% + 6px);
+        transform: none;
+        width: auto;
+    }
+
+    .login-form__tooltip-arrow {
+        display: none;
+    }
+
+    .modal-overlay {
+        padding: 12px;
+        align-items: flex-end;
+    }
+
+    .modal {
+        max-height: 90vh;
+        border-radius: var(--radius-md) var(--radius-md) 0 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-form__helper {
+        font-size: 10px;
+    }
+
+    .login-form__terms {
+        font-size: 11px;
+    }
+}

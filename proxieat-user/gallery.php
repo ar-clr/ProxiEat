@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/../image-analysis/config/config.php';
 ?>
 
 <!DOCTYPE html>
@@ -10,11 +10,16 @@ require_once __DIR__ . '/config/config.php';
     <title>Image Gallery - ProxiEat</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="..\assets\css\core\variables.css?v=<?= time() ?>" rel="stylesheet">
-    <link href="..\assets\css\pages\gallery.css?v=<?= time() ?>" rel="stylesheet">
+    <link href="../assets/css/core/variables.css?v=<?= time() ?>" rel="stylesheet">
+    <link href="../assets/css/layout/sidebar.css?v=<?= time() ?>" rel="stylesheet">
+    <link href="../assets/css/pages/gallery.css?v=<?= time() ?>" rel="stylesheet">
+
     <link rel="stylesheet" href="../assets/css/components/chatbot/chatbot.css?v=<?= time() ?>">
+
 </head>
 <body>
+    <?php include 'includes/sidebar.php'; ?>
+    
     <div class="gallery-page">
         <header class="page-header">
             <h1>Image Gallery</h1>
@@ -106,7 +111,7 @@ require_once __DIR__ . '/config/config.php';
                         </div>
                         <h3 class="empty-title">No captured images yet</h3>
                         <p class="empty-text">Images captured from the camera will appear here together with their AI analysis.</p>
-                        <a href="camera.php" class="btn btn-primary">
+                        <a href="live-monitoring.php" class="btn btn-primary">
                             <i class="bi bi-camera"></i>
                             Go to Camera
                         </a>
@@ -153,8 +158,11 @@ require_once __DIR__ . '/config/config.php';
     <?php include __DIR__ . '/../chatbot/chatbot.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="..\assets\js\gallery\gallery.js?v=<?= time() ?>"></script>
-    <script src="..\assets\vendor\marked\markdown.js?v=<?= time() ?>"></script>
+    <script src="../assets/js/gallery/gallery.js?v=<?= time() ?>"></script>
+
+    <script src="../assets/vendor/marked/markdown.js?v=<?= time() ?>"></script>
+    <!-- <script src="assets/js/vendor/purify.min.js"></script> -->
+     
     <script src="../assets/js/chatbot/chatbot-ui.js?v=<?= time() ?>"></script>
     <script src="../assets/js/chatbot/chatbot-renderer.js?v=<?= time() ?>"></script>
     <script src="../assets/js/chatbot/chatbot-typing.js?v=<?= time() ?>"></script>
